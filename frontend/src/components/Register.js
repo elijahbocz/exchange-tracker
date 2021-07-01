@@ -6,6 +6,10 @@ const StyledRegistration = styled.div`
   text-align: center;
   padding: 1rem;
   margin: 1rem;
+
+  .error {
+    color: red;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -16,22 +20,40 @@ const StyledForm = styled.form`
 `;
 
 function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   function handleRegistration(e) {
     e.preventDefault();
-    const credentials = { username: username, password: password};
-    fetch('http://127.0.0.1:5000/api/register-user', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    })
-      .then(res => res.json())
-      .then(res => console.log(res));
+    if (password === confirmPassword) {
+      const credentials = { username: username, password: password };
+      fetch("http://127.0.0.1:5000/api/register-user", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          if ('error' in res) {
+            if (res['error'] === 1) {
+              setError("Username is taken");
+              setTimeout(() => {
+                setError("");
+              }, 3000);
+            }
+          }
+        });
+    } else {
+      setError("Passwords do not match");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
   }
 
   function updateValues(e) {
@@ -46,8 +68,9 @@ function Register() {
 
   return (
     <div className="home">
-      <Header/>
+      <Header />
       <StyledRegistration>
+        <p className="error">{error}</p>
         <p>Register</p>
         <StyledForm onSubmit={handleRegistration}>
           <label>Username</label>
@@ -57,7 +80,11 @@ function Register() {
           <input type="password" id="password" onChange={updateValues}></input>
           <p></p>
           <label>Confirm Password</label>
-          <input type="password" id="confirm-password" onChange={updateValues}></input>
+          <input
+            type="password"
+            id="confirm-password"
+            onChange={updateValues}
+          ></input>
           <p></p>
           <button>Register</button>
         </StyledForm>
