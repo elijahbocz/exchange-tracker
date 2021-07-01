@@ -1,1 +1,1 @@
-exchange-tracker
+Coin-Exchange-Tracker
