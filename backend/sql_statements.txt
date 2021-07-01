@@ -1,2 +1,2 @@
-create table user (userID VARCHAR(20), username VARCHAR(20), password VARCHAR(20));
+create table users (userID VARCHAR(36), username VARCHAR(20), password VARCHAR(20));
 
