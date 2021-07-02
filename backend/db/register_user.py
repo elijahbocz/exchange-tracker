@@ -19,7 +19,6 @@ def registration(username, password):
     connection = create_connection()
     user_id = uuid.uuid1().hex
     password_hash = generate_password_hash(password)
-    print(user_id, username, password_hash)
     with connection.cursor() as cursor:
         # Create a new record
         sql = "INSERT INTO `users` (`userID`, `username`, `password`) VALUES (%s, %s, %s)"
@@ -31,8 +30,6 @@ def registration(username, password):
 
 def valid_username(username):
     connection = create_connection()
-    print(username)
-    print("\n\n\n")
     with connection:
         with connection.cursor() as cursor:
             sql = "SELECT `username` FROM `users` WHERE `username`=%s"

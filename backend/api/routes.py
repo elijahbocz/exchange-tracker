@@ -2,6 +2,7 @@ from api import app
 from flask import request
 import json
 from db.register_user import registration, valid_username
+from db.login_user import login
 
 @app.route('/api/time')
 def get_current_time():
@@ -24,6 +25,17 @@ def register_user():
         password= req['password']
         if valid_username(username):
             registration(username, password)
-        else:
-            return {"error": 1}
-        return request.json
+            return {"success": 0}
+        return {"error": 1}
+        
+
+@app.route('/api/login-user', methods=['POST'])
+def login_user():
+    if request.method == 'POST':
+        req = request.json
+        username = req['username']
+        password= req['password']
+        if login(username, password):
+            return {"success": 0}
+        return {"error": 1}
+        
