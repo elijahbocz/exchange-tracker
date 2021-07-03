@@ -40,7 +40,9 @@ function Header() {
           <StyledLink className="app-link" to="/dashboard">
             Dashboard
           </StyledLink>
-          <StyledLink className="app-link" to="/new-coin">New Coin</StyledLink>
+          <StyledLink className="app-link" to="/new-coin">
+            New Coin
+          </StyledLink>
         </StyledUserNav>
       ) : (
         <StyledLink className="app-link" to="/">

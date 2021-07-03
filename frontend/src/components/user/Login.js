@@ -22,9 +22,9 @@ const StyledForm = styled.form`
 `;
 
 function Login(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -35,21 +35,21 @@ function Login(props) {
 
   function handleLogin(e) {
     e.preventDefault();
-    const credentials = { username: username, password: password};
-    fetch('http://127.0.0.1:5000/api/login-user', {
-      method: 'POST',
+    const credentials = { username: username, password: password };
+    fetch("http://127.0.0.1:5000/api/login-user", {
+      method: "POST",
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
       body: JSON.stringify(credentials),
     })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res)
-        if ('error' in res) {
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if ("error" in res) {
           setError("Invalid login credentials, try again");
         } else {
-          localStorage.setItem('user', JSON.stringify(res));
+          localStorage.setItem("user", JSON.stringify(res));
           props.history.push("/dashboard");
         }
       });
@@ -65,7 +65,7 @@ function Login(props) {
 
   return (
     <div className="home">
-      <Header/>
+      <Header />
       <StyledLogin>
         <p className="error">{error}</p>
         <p>Login</p>

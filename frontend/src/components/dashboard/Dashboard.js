@@ -31,15 +31,25 @@ const StyledLink = styled(Link)`
 `;
 
 function Dashboard(props) {
+  const [userID, setUserID] = useState("");
+  const [username, setUsername] = useState("");
+
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
     if (!userLoggedIn) {
       props.history.push("/login");
+    } else {
+      const currentUser = JSON.parse(userLoggedIn);
+      setUserID(currentUser['userID']);
+      setUsername(currentUser['username']);
     }
   }, []);
+
   return (
     <StyledDashboard>
       <Header />
+      <p>{userID}</p>
+      <p>{username}</p>
       <p>Dashboard</p>
       <StyledLink to="/new-coin"><button>Add New Coin</button></StyledLink>
     </StyledDashboard>
