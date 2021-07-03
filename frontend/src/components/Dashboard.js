@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
-import Header from "./Header"
+import Header from "./Header";
 
 const StyledDashboard = styled.div`
   text-align: center;
@@ -12,9 +12,7 @@ const StyledDashboard = styled.div`
   }
 `;
 
-
 function Dashboard(props) {
-
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
     if (!userLoggedIn) {

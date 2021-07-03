@@ -22,26 +22,27 @@ const StyledForm = styled.form`
 `;
 
 function SuccessfulRegistration(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   function handleLogin(e) {
     e.preventDefault();
-    const credentials = { username: username, password: password};
-    fetch('http://127.0.0.1:5000/api/login-user', {
-      method: 'POST',
+    const credentials = { username: username, password: password };
+    fetch("http://127.0.0.1:5000/api/login-user", {
+      method: "POST",
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
       body: JSON.stringify(credentials),
     })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res)
-        if ('error' in res) {
-          setError("Invalid login credentials, try again")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if ("error" in res) {
+          setError("Invalid login credentials, try again");
         } else {
+          localStorage.setItem("user", JSON.stringify(res));
           props.history.push("/dashboard");
         }
       });
@@ -57,7 +58,7 @@ function SuccessfulRegistration(props) {
 
   return (
     <div className="home">
-      <Header/>
+      <Header />
       <StyledLogin>
         <p className="error">{error}</p>
         <p>Registration successful, please login:</p>
