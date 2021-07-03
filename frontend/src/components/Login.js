@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import Header from "./Header";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+
+import Header from "./Header";
 
 const StyledLogin = styled.div`
   text-align: center;
@@ -19,7 +21,7 @@ const StyledForm = styled.form`
   }
 `;
 
-function Login() {
+function Login(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -38,11 +40,9 @@ function Login() {
       .then(res => {
         console.log(res)
         if ('error' in res) {
-          if (res['error'] === '1') {
-            setError("Invalid login credentials, try again")
-          }
-        } else if ('success' in res) {
-          // Redirect to main page
+          setError("Invalid login credentials, try again")
+        } else {
+          props.history.push("/dashboard");
         }
       });
   }
@@ -75,4 +75,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default withRouter(Login);

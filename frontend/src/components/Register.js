@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Header from "./Header";
 import styled from "styled-components";
+
+import Header from "./Header";
 
 const StyledRegistration = styled.div`
   text-align: center;
