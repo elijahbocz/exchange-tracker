@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "./Header"
@@ -12,7 +13,14 @@ const StyledDashboard = styled.div`
 `;
 
 
-function Dashboard() {
+function Dashboard(props) {
+
+  useEffect(() => {
+    const userLoggedIn = localStorage.getItem("user");
+    if (!userLoggedIn) {
+      props.history.push("/login");
+    }
+  }, []);
   return (
     <StyledDashboard>
       <Header />
@@ -21,4 +29,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);

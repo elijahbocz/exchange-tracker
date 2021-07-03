@@ -1,8 +1,11 @@
-from api import app
-from flask import request
 import json
-from db.register_user import registration, valid_username
+
 from db.login_user import login
+from db.register_user import registration, valid_username
+from flask import request
+
+from api import app
+
 
 @app.route('/api/time')
 def get_current_time():
@@ -35,7 +38,9 @@ def login_user():
         req = request.json
         username = req['username']
         password= req['password']
-        if login(username, password):
-            return {"success": 0}
+        login_res = login(username, password)
+        if login_res['passwords_match'] == True:
+            login_res.pop('passwords_match', None)
+            return login_res
         return {"error": 1}
         

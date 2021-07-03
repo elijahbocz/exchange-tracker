@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
-import Header from "./Header";
+import Header from "../Header";
 
 const StyledRegistration = styled.div`
   text-align: center;
@@ -20,7 +21,7 @@ const StyledForm = styled.form`
   }
 `;
 
-function Register() {
+function Register(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -47,6 +48,8 @@ function Register() {
                 setError("");
               }, 3000);
             }
+          } else {
+            props.history.push('/successful-registration');
           }
         });
     } else {
@@ -94,4 +97,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default withRouter(Register);

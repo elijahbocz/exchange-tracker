@@ -1,9 +1,9 @@
-import pymysql.cursors
 import os
 import uuid
+
+import pymysql.cursors
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash
-
 
 load_dotenv()
 

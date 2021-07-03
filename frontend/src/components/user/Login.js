@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
-import Header from "./Header";
+import Header from "../Header";
 
 const StyledLogin = styled.div`
   text-align: center;
@@ -26,6 +26,14 @@ function Login(props) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    const userLoggedIn = localStorage.getItem("user");
+    if (userLoggedIn) {
+      const currentUser = JSON.parse(userLoggedIn);
+      props.history.push("/dashboard");
+    }
+  }, []);
+
   function handleLogin(e) {
     e.preventDefault();
     const credentials = { username: username, password: password};
@@ -40,8 +48,9 @@ function Login(props) {
       .then(res => {
         console.log(res)
         if ('error' in res) {
-          setError("Invalid login credentials, try again")
+          setError("Invalid login credentials, try again");
         } else {
+          localStorage.setItem('user', JSON.stringify(res));
           props.history.push("/dashboard");
         }
       });
