@@ -1,23 +1,9 @@
-import json
-
 from db.login_user import login
 from db.register_user import registration, valid_username
+from db.coin import add_new_coin
 from flask import request
 
 from api import app
-
-
-@app.route('/api/time')
-def get_current_time():
-    return {'time': time.time()}
-
-
-@app.route('/api/post', methods=['POST'])
-def post():
-    if request.method == 'POST':
-        req = request.json
-        print(req)
-        return request.json
 
 
 @app.route('/api/register-user', methods=['POST'])
@@ -44,3 +30,15 @@ def login_user():
             return login_res
         return {"error": 1}
         
+
+@app.route('/api/new-coin', methods=['POST'])
+def new_coin():
+    if request.method == 'POST':
+        req = request.json
+        coin_name = req['coinName']
+        exchange = req['exchange']
+        quantity = req['quantity']
+        avg_price = req['averagePrice']
+        add_new_coin(coin_name, exchange, quantity, avg_price)
+        print(req)
+    return request.json

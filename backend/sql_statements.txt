@@ -1,2 +1,3 @@
 create table users (userID VARCHAR(36), username VARCHAR(20), password VARCHAR(20));
 
+create table coins (coinID VARCHAR(36), coinName VARCHAR(50), exchange VARCHAR(20), quantity DECIMAL(10,7), averagePrice DECIMAL(10, 7), dateAdded VARCHAR(32));
