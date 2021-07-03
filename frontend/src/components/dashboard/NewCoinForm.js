@@ -17,6 +17,7 @@ const StyledForm = styled.form`
 `;
 
 function DashboardSubmission(props) {
+  const [userID, setUserID] = useState("");
   const [coinName, setCoinName] = useState("");
   const [exchange, setExchange] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -26,12 +27,15 @@ function DashboardSubmission(props) {
     const userLoggedIn = localStorage.getItem("user");
     if (!userLoggedIn) {
       props.history.push("/login");
+    } else {
+      const user = JSON.parse(userLoggedIn);
+      setUserID(user['userID']);
     }
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    const submission = { coinName: coinName, exchange: exchange, quantity: quantity, averagePrice: averagePrice};
+    const submission = { userID: userID, coinName: coinName, exchange: exchange, quantity: quantity, averagePrice: averagePrice};
     fetch('http://127.0.0.1:5000/api/new-coin', {
       method: 'POST',
       headers: {

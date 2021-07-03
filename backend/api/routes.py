@@ -36,9 +36,9 @@ def new_coin():
     if request.method == 'POST':
         req = request.json
         coin_name = req['coinName']
+        user_id = req['userID']
         exchange = req['exchange']
         quantity = req['quantity']
         avg_price = req['averagePrice']
-        add_new_coin(coin_name, exchange, quantity, avg_price)
-        print(req)
+        add_new_coin(coin_name, user_id, exchange, quantity, avg_price)
     return request.json
