@@ -40,8 +40,18 @@ function Dashboard(props) {
       props.history.push("/login");
     } else {
       const currentUser = JSON.parse(userLoggedIn);
-      setUserID(currentUser['userID']);
-      setUsername(currentUser['username']);
+      setUsername(currentUser["username"]);
+      fetch("http://127.0.0.1:5000/api/get-coins", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({userID: currentUser["userID"]}),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+        });
     }
   }, []);
 
@@ -51,7 +61,9 @@ function Dashboard(props) {
       <p>{userID}</p>
       <p>{username}</p>
       <p>Dashboard</p>
-      <StyledLink to="/new-coin"><button>Add New Coin</button></StyledLink>
+      <StyledLink to="/new-coin">
+        <button>Add New Coin</button>
+      </StyledLink>
     </StyledDashboard>
   );
 }

@@ -1,6 +1,6 @@
 from db.login_user import login
 from db.register_user import registration, valid_username
-from db.coin import add_new_coin
+from db.coin import add_new_coin, get_user_coins
 from flask import request
 
 from api import app
@@ -41,4 +41,13 @@ def new_coin():
         quantity = req['quantity']
         avg_price = req['averagePrice']
         add_new_coin(coin_name, user_id, exchange, quantity, avg_price)
+    return request.json
+
+@app.route('/api/get-coins', methods=['POST'])
+def get_coins():
+    if request.method == 'POST':
+        req = request.json
+        user_id = req['userID']
+        print(user_id)
+        get_user_coins(user_id)
     return request.json

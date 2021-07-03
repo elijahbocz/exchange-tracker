@@ -27,3 +27,14 @@ def add_new_coin(coin_name, user_id, exchange, quantity, avg_price):
     # connection is not autocommit by default. So you must commit to save
     # your changes.
     connection.commit()
+
+
+def get_user_coins(user_id):
+    connection = create_connection();
+    with connection.cursor() as cursor:
+        sql = "SELECT * FROM `coins` WHERE `userID`=%s"
+        cursor.execute(sql, (user_id))
+        result = cursor.fetchall()
+        print(result)
+
+        

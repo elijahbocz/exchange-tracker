@@ -45,7 +45,8 @@ function DashboardSubmission(props) {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res)
+        console.log(res);
+        props.history.push("/dashboard");
       });
   }
 
