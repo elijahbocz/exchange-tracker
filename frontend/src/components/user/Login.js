@@ -29,7 +29,6 @@ function Login(props) {
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
     if (userLoggedIn) {
-      const currentUser = JSON.parse(userLoggedIn);
       props.history.push("/dashboard");
     }
   }, []);
