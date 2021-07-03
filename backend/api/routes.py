@@ -1,7 +1,7 @@
 from db.login_user import login
 from db.register_user import registration, valid_username
 from db.coin import add_new_coin, get_user_coins
-from flask import request
+from flask import json, request, jsonify
 
 from api import app
 
@@ -49,5 +49,6 @@ def get_coins():
         req = request.json
         user_id = req['userID']
         print(user_id)
-        get_user_coins(user_id)
+        coins = get_user_coins(user_id)
+        return(jsonify(coins))
     return request.json

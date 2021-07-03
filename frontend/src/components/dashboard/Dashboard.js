@@ -31,7 +31,6 @@ const StyledLink = styled(Link)`
 `;
 
 function Dashboard(props) {
-  const [userID, setUserID] = useState("");
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -50,7 +49,7 @@ function Dashboard(props) {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
+          console.table(res);
         });
     }
   }, []);
@@ -58,7 +57,6 @@ function Dashboard(props) {
   return (
     <StyledDashboard>
       <Header />
-      <p>{userID}</p>
       <p>{username}</p>
       <p>Dashboard</p>
       <StyledLink to="/new-coin">

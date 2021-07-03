@@ -35,6 +35,5 @@ def get_user_coins(user_id):
         sql = "SELECT * FROM `coins` WHERE `userID`=%s"
         cursor.execute(sql, (user_id))
         result = cursor.fetchall()
-        print(result)
-
+        return result
         
