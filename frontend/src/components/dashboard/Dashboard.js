@@ -30,8 +30,14 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledTable = styled.table`
+  text-align: center;
+  margin: 0 auto;
+`;
+
 function Dashboard(props) {
   const [username, setUsername] = useState("");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -45,11 +51,12 @@ function Dashboard(props) {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({userID: currentUser["userID"]}),
+        body: JSON.stringify({ userID: currentUser["userID"] }),
       })
         .then((res) => res.json())
         .then((res) => {
-          console.table(res);
+          console.log(res);
+          setData(res);
         });
     }
   }, []);
@@ -62,6 +69,16 @@ function Dashboard(props) {
       <StyledLink to="/new-coin">
         <button>Add New Coin</button>
       </StyledLink>
+      <StyledTable>
+        {data.map((coin) => (
+          <tr key={coin.coinID}>
+            <td>{coin.coinName}</td>
+            <td>{coin.exchange}</td>
+            <td>{coin.quantity}</td>
+            <td>{coin.averagePrice}</td>
+          </tr>
+        ))}
+      </StyledTable>
     </StyledDashboard>
   );
 }

@@ -43,12 +43,12 @@ def new_coin():
         add_new_coin(coin_name, user_id, exchange, quantity, avg_price)
     return request.json
 
+
 @app.route('/api/get-coins', methods=['POST'])
 def get_coins():
     if request.method == 'POST':
         req = request.json
         user_id = req['userID']
-        print(user_id)
         coins = get_user_coins(user_id)
         return(jsonify(coins))
     return request.json
