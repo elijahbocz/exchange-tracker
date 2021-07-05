@@ -41,15 +41,15 @@ function Register(props) {
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
-          if ('error' in res) {
-            if (res['error'] === 1) {
+          if ("error" in res) {
+            if (res["error"] === 1) {
               setError("Username is taken");
               setTimeout(() => {
                 setError("");
               }, 3000);
             }
           } else {
-            props.history.push('/successful-registration');
+            props.history.push("/successful-registration");
           }
         });
     } else {
