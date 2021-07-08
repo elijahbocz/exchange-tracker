@@ -64,6 +64,8 @@ function Dashboard(props) {
           <th>Exchange</th>
           <th>Quantity</th>
           <th>Average Price</th>
+          <th>Current Price</th>
+          <th>P & L</th>
         </tr>
         {data.map((coin) => (
           <tr key={coin.coinID}>
@@ -71,8 +73,18 @@ function Dashboard(props) {
             <td>{coin.exchange}</td>
             <td>{coin.quantity}</td>
             <td>{coin.averagePrice}</td>
+            <td>123.123</td>
+            <td>1.23</td>
           </tr>
         ))}
+        <tr>
+          <td colspan="5">
+            Total P & L:
+          </td>
+          <td>
+            123
+          </td>
+        </tr>
       </StyledTable>
     </StyledDashboard>
   );
