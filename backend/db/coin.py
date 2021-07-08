@@ -12,7 +12,7 @@ def create_connection():
     host=os.environ.get("DB_HOST"), 
     user=os.environ.get("DB_USER"), 
     password=os.environ.get("DB_PASSWORD"), 
-    database='exchange_tracker', 
+    database=os.environ.get("DB_NAME"),
     cursorclass=pymysql.cursors.DictCursor)
 
 
@@ -36,4 +36,3 @@ def get_user_coins(user_id):
         cursor.execute(sql, (user_id))
         result = cursor.fetchall()
         return result
-        

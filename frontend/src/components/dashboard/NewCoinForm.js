@@ -14,6 +14,10 @@ const StyledDashboardSubmission = styled.div`
 
 const StyledForm = styled.form`
   margin: 1rem;
+  label {
+    margin: 1rem;
+    width: 3rem;
+  }
 `;
 
 function DashboardSubmission(props) {

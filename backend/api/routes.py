@@ -44,11 +44,14 @@ def new_coin():
     return request.json
 
 
-@app.route('/api/get-coins', methods=['POST'])
-def get_coins():
+@app.route('/api/get-dashboard', methods=['POST'])
+def get_dashboard():
     if request.method == 'POST':
         req = request.json
         user_id = req['userID']
         coins = get_user_coins(user_id)
+        for coin in coins:
+            print(coin['coinName'])
         return(jsonify(coins))
     return request.json
+
