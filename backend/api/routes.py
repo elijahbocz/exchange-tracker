@@ -1,6 +1,7 @@
 from db.login_user import login
 from db.register_user import registration, valid_username
 from db.coin import add_new_coin, get_user_coins
+from db.coins_list import fetch_coins_list
 from flask import json, request, jsonify
 
 from api import app
@@ -42,6 +43,11 @@ def new_coin():
         avg_price = req['averagePrice']
         add_new_coin(coin_name, user_id, exchange, quantity, avg_price)
     return request.json
+
+
+@app.route('/api/get-coins-list')
+def get_coins_list():
+    return jsonify(fetch_coins_list())
 
 
 @app.route('/api/get-dashboard', methods=['POST'])

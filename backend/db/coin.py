@@ -34,5 +34,4 @@ def get_user_coins(user_id):
     with connection.cursor() as cursor:
         sql = "SELECT * FROM `coins` WHERE `userID`=%s"
         cursor.execute(sql, (user_id))
-        result = cursor.fetchall()
-        return result
+        return cursor.fetchall()

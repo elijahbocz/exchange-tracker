@@ -32,23 +32,37 @@ function DashboardSubmission(props) {
     if (!userLoggedIn) {
       props.history.push("/login");
     } else {
-      const user = JSON.parse(userLoggedIn);
-      setUserID(user['userID']);
+      fetch("http://127.0.0.1:5000/api/get-coins-list", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+        });
     }
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    const submission = { userID: userID, coinName: coinName, exchange: exchange, quantity: quantity, averagePrice: averagePrice};
-    fetch('http://127.0.0.1:5000/api/new-coin', {
-      method: 'POST',
+    const submission = {
+      userID: userID,
+      coinName: coinName,
+      exchange: exchange,
+      quantity: quantity,
+      averagePrice: averagePrice,
+    };
+    fetch("http://127.0.0.1:5000/api/new-coin", {
+      method: "POST",
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
       body: JSON.stringify(submission),
     })
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         console.log(res);
         props.history.push("/dashboard");
       });
@@ -71,19 +85,19 @@ function DashboardSubmission(props) {
       <Header />
       <p>New Coin</p>
       <StyledForm onSubmit={handleSubmit}>
-          <label>Coin Name</label>
-          <input id="coin-name" type="text" onChange={updateValues}></input>
-          <p></p>
-          <label>Exchange</label>
-          <input id="exchange" type="text" onChange={updateValues}></input>
-          <p></p>
-          <label>Quantity</label>
-          <input id="quantity" type="text" onChange={updateValues}></input>
-          <p></p>
-          <label>Average Price</label>
-          <input id="average-price" type="text" onChange={updateValues}></input>
-          <p></p>
-          <button>Submit</button>
+        <label>Coin Name</label>
+        <input id="coin-name" type="text" onChange={updateValues}></input>
+        <p></p>
+        <label>Exchange</label>
+        <input id="exchange" type="text" onChange={updateValues}></input>
+        <p></p>
+        <label>Quantity</label>
+        <input id="quantity" type="text" onChange={updateValues}></input>
+        <p></p>
+        <label>Average Price</label>
+        <input id="average-price" type="text" onChange={updateValues}></input>
+        <p></p>
+        <button>Submit</button>
       </StyledForm>
     </StyledDashboardSubmission>
   );

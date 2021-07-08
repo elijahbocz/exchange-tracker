@@ -30,5 +30,9 @@ def add_coins_list():
     connection.commit()
 
 
-if __name__ == "__main__":
-    add_coins_list()
+def fetch_coins_list():
+    connection = create_connection()
+    with connection.cursor() as cursor:
+        sql = "SELECT * FROM `coins_list`"
+        cursor.execute(sql)
+        return cursor.fetchall()
