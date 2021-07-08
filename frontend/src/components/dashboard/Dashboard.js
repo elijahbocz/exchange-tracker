@@ -12,27 +12,13 @@ const StyledDashboard = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-
-  button {
-    background: black;
-    border: none;
-    border-radius: 6px;
-    color: white;
-    margin: 1rem;
-    padding: 1rem;
-    width: 100px;
-  }
-
-  button:hover {
-    cursor: pointer;
-  }
-`;
-
 const StyledTable = styled.table`
   text-align: center;
   margin: 0 auto;
+
+  th, td {
+    padding: 1rem;
+  }
 `;
 
 function Dashboard(props) {
@@ -61,15 +47,24 @@ function Dashboard(props) {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    props.history.push("/");
+  }
+
   return (
     <StyledDashboard>
       <Header />
       <p>{username}</p>
+      <button onClick={handleLogout}>Logout</button>
       <p>Dashboard</p>
-      <StyledLink to="/new-coin">
-        <button>Add New Coin</button>
-      </StyledLink>
       <StyledTable>
+        <tr>
+          <th>Coin Name</th>
+          <th>Exchange</th>
+          <th>Quantity</th>
+          <th>Average Price</th>
+        </tr>
         {data.map((coin) => (
           <tr key={coin.coinID}>
             <td>{coin.coinName}</td>
