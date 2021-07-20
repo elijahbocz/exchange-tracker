@@ -11,7 +11,7 @@ def create_connection():
     host=os.environ.get("DB_HOST"), 
     user=os.environ.get("DB_USER"), 
     password=os.environ.get("DB_PASSWORD"), 
-    database='exchange_tracker', 
+    database=os.environ.get("DB_NAME"),
     cursorclass=pymysql.cursors.DictCursor)
 
 

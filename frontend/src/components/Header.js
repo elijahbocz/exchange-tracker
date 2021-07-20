@@ -45,9 +45,17 @@ function Header() {
           </StyledLink>
         </StyledUserNav>
       ) : (
-        <StyledLink className="app-link" to="/">
-          Home
-        </StyledLink>
+        <StyledUserNav>
+          <StyledLink className="app-link" to="/">
+            Home
+          </StyledLink>
+          <StyledLink className="app-link" to="/login">
+            Login
+          </StyledLink>
+          <StyledLink className="app-link" to="/register">
+            Register
+          </StyledLink>
+        </StyledUserNav>
       )}
     </StyledHeader>
   );
