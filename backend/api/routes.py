@@ -37,13 +37,14 @@ def login_user():
 def new_coin():
     if request.method == 'POST':
         req = request.json
+        coin_id = req['coinID']
         user_id = req['userID']
         coin_name = req['coinName']
         coin_symbol = req['coinSymbol']
         exchange = req['exchange']
         quantity = req['quantity']
         avg_price = req['averagePrice']
-        add_new_coin(user_id, coin_name, coin_symbol, exchange, quantity, avg_price)
+        add_new_coin(coin_id, user_id, coin_name, coin_symbol, exchange, quantity, avg_price)
     return request.json
 
 
@@ -58,11 +59,11 @@ def get_dashboard():
         req = request.json
         user_id = req['userID']
         coins = get_user_coins(user_id)
-        coin_names = []
+        coin_ids = []
         for coin in coins:
             print(coin['coinName'])
-            coin_names.append(coin['coinName'])
-        prices = get_simple_price(coin_names, 'usd')
+            coin_ids.append(coin['coinID'])
+        prices = get_simple_price(",".join(coin_ids), 'usd')
         print(prices)
         return(jsonify(coins))
     return request.json

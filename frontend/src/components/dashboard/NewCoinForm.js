@@ -27,6 +27,7 @@ const StyledForm = styled.form`
 `;
 
 function DashboardSubmission(props) {
+  const [coinID, setCoinID] = useState("");
   const [userID, setUserID] = useState("");
   const [coinSymbol, setCoinSymbol] = useState("");
   const [exchange, setExchange] = useState("");
@@ -57,7 +58,10 @@ function DashboardSubmission(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const foundCoin = coins.find((coin) => coin.coinSymbol === coinSymbol);
+    const foundCoin = coins.find(
+      (coin) =>
+        coin.coinSymbol === coinSymbol && !coin.coinName.includes("Binance")
+    );
 
     if (
       coinSymbol === "" ||
@@ -70,8 +74,10 @@ function DashboardSubmission(props) {
       setError("Invalid Coin Symbol");
     } else if (quantity < 0 || averagePrice < 0) {
       setError("Values can not be negative");
+      // TODO: CHECK IF QUANTITY AND AVG PRICE ARE NUMBERS
     } else {
       const submission = {
+        coinID: foundCoin.coinID,
         userID: userID,
         coinName: foundCoin.coinName,
         coinSymbol: coinSymbol,
