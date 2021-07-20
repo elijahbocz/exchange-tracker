@@ -16,7 +16,8 @@ const StyledTable = styled.table`
   text-align: center;
   margin: 0 auto;
 
-  th, td {
+  th,
+  td {
     padding: 1rem;
   }
 `;
@@ -24,6 +25,7 @@ const StyledTable = styled.table`
 function Dashboard(props) {
   const [username, setUsername] = useState("");
   const [data, setData] = useState([]);
+  const [totalPL, setTotalPL] = useState(0);
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -41,15 +43,23 @@ function Dashboard(props) {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           setData(res);
         });
+        calculateTotalPandL();
     }
   }, []);
 
   const handleLogout = () => {
     localStorage.clear();
     props.history.push("/");
+  };
+
+  const calculateTotalPandL = () => {
+    let total = 0;
+    data.forEach(item => {
+      total += parseFloat(item.pAndL);
+    })
+    setTotalPL(total);
   }
 
   return (
@@ -74,16 +84,12 @@ function Dashboard(props) {
             <td>{coin.quantity}</td>
             <td>{coin.averagePrice}</td>
             <td>{coin.currentPrice}</td>
-            <td>1.23</td>
+            <td>{coin.pAndL}</td>
           </tr>
         ))}
         <tr>
-          <td colspan="5">
-            Total P & L:
-          </td>
-          <td>
-            123
-          </td>
+          <td colspan="5">Total P & L:</td>
+          <td>{totalPL}</td>
         </tr>
       </StyledTable>
     </StyledDashboard>
