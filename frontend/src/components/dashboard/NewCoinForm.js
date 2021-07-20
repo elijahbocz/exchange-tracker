@@ -67,9 +67,10 @@ function DashboardSubmission(props) {
     ) {
       setError("Fields can not be empty");
     } else if (foundCoin === undefined) {
-      setError("Invalid Coin Symbol")
-    }
-    else {
+      setError("Invalid Coin Symbol");
+    } else if (quantity < 0 || averagePrice < 0) {
+      setError("Values can not be negative");
+    } else {
       const submission = {
         userID: userID,
         coinName: foundCoin.coinName,

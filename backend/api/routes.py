@@ -37,7 +37,6 @@ def login_user():
 def new_coin():
     if request.method == 'POST':
         req = request.json
-        print(req)
         user_id = req['userID']
         coin_name = req['coinName']
         coin_symbol = req['coinSymbol']
