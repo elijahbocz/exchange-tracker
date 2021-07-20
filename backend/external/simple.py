@@ -8,4 +8,4 @@ def get_simple_price(ids, vs_currencies):
     }
     url = "https://api.coingecko.com/api/v3/simple/price"
     res = requests.get(url, params=params)
-    print(res.json())
+    return res.json()

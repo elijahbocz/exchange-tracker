@@ -73,7 +73,7 @@ function Dashboard(props) {
             <td>{coin.exchange}</td>
             <td>{coin.quantity}</td>
             <td>{coin.averagePrice}</td>
-            <td>123.123</td>
+            <td>{coin.currentPrice}</td>
             <td>1.23</td>
           </tr>
         ))}

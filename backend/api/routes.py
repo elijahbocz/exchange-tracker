@@ -61,10 +61,12 @@ def get_dashboard():
         coins = get_user_coins(user_id)
         coin_ids = []
         for coin in coins:
-            print(coin['coinName'])
             coin_ids.append(coin['coinID'])
         prices = get_simple_price(",".join(coin_ids), 'usd')
-        print(prices)
+        for key in prices.keys():
+            for coin in coins:
+                if (coin['coinID'] == key):
+                    coin['currentPrice'] = prices[key]['usd']
         return(jsonify(coins))
     return request.json
 
