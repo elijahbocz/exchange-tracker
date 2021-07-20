@@ -1,3 +1,5 @@
 create table users (userID VARCHAR(36), username VARCHAR(20), password VARCHAR(20));
 
-create table coins (coinID VARCHAR(36), coinName VARCHAR(50), exchange VARCHAR(20), quantity DECIMAL(10,7), averagePrice DECIMAL(10, 7), dateAdded VARCHAR(32));
+create table coins (coinID VARCHAR(36), userID VARCHAR(36), coinName VARCHAR(50), coinSymbol VARCHAR(10), exchange VARCHAR(20), quantity VARCHAR(16), averagePrice VARCHAR(16), dateAdded VARCHAR(32));
+
+create table coins_list (coinID VARCHAR(64), coinSymbol VARCHAR(64), coinName VARCHAR(64));

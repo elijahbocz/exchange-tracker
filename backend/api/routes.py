@@ -2,6 +2,7 @@ from db.login_user import login
 from db.register_user import registration, valid_username
 from db.coin import add_new_coin, get_user_coins
 from db.coins_list import fetch_coins_list
+from external.simple import get_simple_price
 from flask import json, request, jsonify
 
 from api import app
@@ -36,12 +37,14 @@ def login_user():
 def new_coin():
     if request.method == 'POST':
         req = request.json
-        coin_name = req['coinName']
+        print(req)
         user_id = req['userID']
+        coin_name = req['coinName']
+        coin_symbol = req['coinSymbol']
         exchange = req['exchange']
         quantity = req['quantity']
         avg_price = req['averagePrice']
-        add_new_coin(coin_name, user_id, exchange, quantity, avg_price)
+        add_new_coin(user_id, coin_name, coin_symbol, exchange, quantity, avg_price)
     return request.json
 
 
@@ -56,8 +59,12 @@ def get_dashboard():
         req = request.json
         user_id = req['userID']
         coins = get_user_coins(user_id)
+        coin_names = []
         for coin in coins:
             print(coin['coinName'])
+            coin_names.append(coin['coinName'])
+        prices = get_simple_price(coin_names, 'usd')
+        print(prices)
         return(jsonify(coins))
     return request.json
 

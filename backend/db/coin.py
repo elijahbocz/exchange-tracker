@@ -16,13 +16,13 @@ def create_connection():
     cursorclass=pymysql.cursors.DictCursor)
 
 
-def add_new_coin(coin_name, user_id, exchange, quantity, avg_price):
+def add_new_coin(user_id, coin_name, coin_symbol, exchange, quantity, avg_price):
     connection = create_connection()
     with connection.cursor() as cursor:
         coin_id = uuid.uuid1().hex
         now = str(datetime.now())
-        sql = "INSERT INTO `coins` (`coinID`, `userID`, `coinName`, `exchange`, `quantity`, `averagePrice`, `dateAdded`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        cursor.execute(sql, (coin_id, user_id, coin_name, exchange, quantity, avg_price, now))
+        sql = "INSERT INTO `coins` (`coinID`, `userID`, `coinName`, `coinSymbol`, `exchange`, `quantity`, `averagePrice`, `dateAdded`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor.execute(sql, (coin_id, user_id, coin_name, coin_symbol, exchange, quantity, avg_price, now))
 
     # connection is not autocommit by default. So you must commit to save
     # your changes.
