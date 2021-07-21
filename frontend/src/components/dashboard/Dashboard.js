@@ -10,9 +10,9 @@ const StyledDashboard = styled.div`
 `;
 
 const StyledTable = styled.table`
-  background: #EBF5EE;
+  background: #ebf5ee;
   text-align: center;
-  margin: 0 auto;
+  margin: 1rem auto;
 
   th {
     color: #283044;
@@ -21,6 +21,14 @@ const StyledTable = styled.table`
   th,
   td {
     padding: 1rem;
+  }
+
+  .profit {
+    color: #00CE2A;
+  }
+
+  .loss {
+    color: #BA2D13;
   }
 `;
 
@@ -75,12 +83,20 @@ function Dashboard(props) {
               <td>{coin.quantity}</td>
               <td>{coin.averagePrice}</td>
               <td>{coin.currentPrice}</td>
-              <td>{coin.pAndL}</td>
+              {coin.pAndL > 0 ? (
+                <td className="profit">{coin.pAndL}</td>
+              ) : (
+                <td className="loss">{coin.pAndL}</td>
+              )}
             </tr>
           ))}
           <tr>
             <td colSpan="5">Total P & L:</td>
-            <td>{data.totalPL}</td>
+            {data.totalPL > 0 ? (
+                <td className="profit">{data.totalPL}</td>
+              ) : (
+                <td className="loss">{data.totalPL}</td>
+              )}
           </tr>
         </StyledTable>
       </StyledDashboard>

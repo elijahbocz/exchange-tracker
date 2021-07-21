@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Header from "../Header";
 
 const StyledEntry = styled.div`
+  padding: 1rem;
   text-align: center;
   h1 {
     font-size: 3rem;
@@ -16,18 +17,40 @@ const StyledEntry = styled.div`
 `;
 
 const StyledForm = styled.form`
+  background: #ebf5ee;
   padding: 1rem;
+  margin: 1rem 20%;
+ 
+  button {
+    background: #78A1BB;
+    border-radius: 6px;
+    color: #283044;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  button:hover {
+    cursor: pointer;
+    opacity: .9;
+  }
+`;
+
+const StyledInputGroup = styled.div`
+  padding: 0.75rem;
+  text-align: left;
+
   label {
-    padding-right: 2rem;
+    color: #283044;
+    padding-right: rem;
   }
 
   input {
-    width: 15rem;
+    background: #fff;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    width: 100%;
   }
 `;
 
 function Entry(props) {
-  const [coinID, setCoinID] = useState("");
   const [userID, setUserID] = useState("");
   const [coinSymbol, setCoinSymbol] = useState("");
   const [exchange, setExchange] = useState("");
@@ -113,23 +136,31 @@ function Entry(props) {
 
   return (
     <div className="entry-wrapper">
+      <Header />
       <StyledEntry>
-        <Header />
         <p>New Coin</p>
         <p className="error">{error}</p>
         <StyledForm onSubmit={handleSubmit}>
-          <label>Coin Symbol</label>
-          <input id="coin-symbol" type="text" onChange={updateValues}></input>
-          <p></p>
-          <label>Exchange</label>
-          <input id="exchange" type="text" onChange={updateValues}></input>
-          <p></p>
-          <label>Quantity</label>
-          <input id="quantity" type="text" onChange={updateValues}></input>
-          <p></p>
-          <label>Average Price</label>
-          <input id="average-price" type="text" onChange={updateValues}></input>
-          <p></p>
+          <StyledInputGroup>
+            <label>Coin Symbol (btc, eth, ...)</label>
+            <input id="coin-symbol" type="text" onChange={updateValues}></input>
+          </StyledInputGroup>
+          <StyledInputGroup>
+            <label>Exchange</label>
+            <input id="exchange" type="text" onChange={updateValues}></input>
+          </StyledInputGroup>
+          <StyledInputGroup>
+            <label>Quantity</label>
+            <input id="quantity" type="text" onChange={updateValues}></input>
+          </StyledInputGroup>
+          <StyledInputGroup>
+            <label>Average Price</label>
+            <input
+              id="average-price"
+              type="text"
+              onChange={updateValues}
+            ></input>
+          </StyledInputGroup>
           <button>Submit</button>
         </StyledForm>
       </StyledEntry>

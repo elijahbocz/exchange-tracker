@@ -6,6 +6,7 @@ import Header from "./Header";
 
 const StyledHomeContent = styled.div`
   text-align: center;
+
 `;
 
 const StyledHomeText = styled.div`
@@ -17,12 +18,12 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 
   button {
-    background: black;
+    background: #78A1BB;
     border: none;
     border-radius: 6px;
-    color: white;
+    color: #fff;
     margin: 1rem;
-    padding: 1rem;
+    padding: 0.5rem;
     width: 100px;
   }
 
