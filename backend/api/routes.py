@@ -67,12 +67,18 @@ def get_dashboard():
             for coin in coins:
                 if (coin['coinID'] == key):
                     coin['currentPrice'] = prices[key]['usd']
+        total_p_l = 0
         for coin in coins:
             quantity = float(coin['quantity'])
             avg_price = float(coin['averagePrice'])
             cur_price = float(coin['currentPrice'])
             p_and_l = (cur_price * quantity) - (avg_price * quantity)
+            total_p_l += p_and_l
             coin['pAndL'] = p_and_l
-        return(jsonify(coins))
+        dashboard = {}
+        dashboard['coins'] = coins
+        dashboard['totalPL'] = total_p_l
+        print(dashboard)
+        return(jsonify(dashboard))
     return request.json
 
