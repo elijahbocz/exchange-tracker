@@ -24,7 +24,10 @@ const StyledTable = styled.table`
 
 function Dashboard(props) {
   const [username, setUsername] = useState("");
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ 
+    'coins': [],
+    'totalPL': 0
+  });
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
