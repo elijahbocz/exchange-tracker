@@ -24,8 +24,7 @@ const StyledTable = styled.table`
 
 function Dashboard(props) {
   const [username, setUsername] = useState("");
-  const [data, setData] = useState([]);
-  const [totalPL, setTotalPL] = useState(0);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -43,9 +42,9 @@ function Dashboard(props) {
       })
         .then((res) => res.json())
         .then((res) => {
+          console.log(res);
           setData(res);
         });
-        calculateTotalPandL();
     }
   }, []);
 
@@ -54,14 +53,6 @@ function Dashboard(props) {
     props.history.push("/");
   };
 
-  const calculateTotalPandL = () => {
-    let total = 0;
-    data.forEach(item => {
-      total += parseFloat(item.pAndL);
-    })
-    setTotalPL(total);
-  }
-
   return (
     <StyledDashboard>
       <Header />
@@ -69,6 +60,7 @@ function Dashboard(props) {
       <button onClick={handleLogout}>Logout</button>
       <p>Dashboard</p>
       <StyledTable>
+        <p></p>
         <tr>
           <th>Coin Name</th>
           <th>Exchange</th>
@@ -77,7 +69,7 @@ function Dashboard(props) {
           <th>Current Price</th>
           <th>P & L</th>
         </tr>
-        {data.map((coin) => (
+        {data.coins.map((coin) => (
           <tr key={coin.coinID}>
             <td>{coin.coinName}</td>
             <td>{coin.exchange}</td>
@@ -88,8 +80,8 @@ function Dashboard(props) {
           </tr>
         ))}
         <tr>
-          <td colspan="5">Total P & L:</td>
-          <td>{totalPL}</td>
+          <td colSpan="5">Total P & L:</td>
+          <td>{data.totalPL}</td>
         </tr>
       </StyledTable>
     </StyledDashboard>
