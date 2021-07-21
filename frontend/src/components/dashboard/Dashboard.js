@@ -5,16 +5,18 @@ import styled from "styled-components";
 import Header from "../Header";
 
 const StyledDashboard = styled.div`
+  padding: 1rem;
   text-align: center;
-
-  h1 {
-    font-size: 3rem;
-  }
 `;
 
 const StyledTable = styled.table`
+  background: #EBF5EE;
   text-align: center;
   margin: 0 auto;
+
+  th {
+    color: #283044;
+  }
 
   th,
   td {
@@ -24,9 +26,9 @@ const StyledTable = styled.table`
 
 function Dashboard(props) {
   const [username, setUsername] = useState("");
-  const [data, setData] = useState({ 
-    'coins': [],
-    'totalPL': 0
+  const [data, setData] = useState({
+    coins: [],
+    totalPL: 0,
   });
 
   useEffect(() => {
@@ -51,43 +53,38 @@ function Dashboard(props) {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    props.history.push("/");
-  };
-
   return (
-    <StyledDashboard>
+    <div className="dashboard-wrapper">
       <Header />
-      <p>{username}</p>
-      <button onClick={handleLogout}>Logout</button>
-      <p>Dashboard</p>
-      <StyledTable>
-        <p></p>
-        <tr>
-          <th>Coin Name</th>
-          <th>Exchange</th>
-          <th>Quantity</th>
-          <th>Average Price</th>
-          <th>Current Price</th>
-          <th>P & L</th>
-        </tr>
-        {data.coins.map((coin) => (
-          <tr key={coin.coinID}>
-            <td>{coin.coinName}</td>
-            <td>{coin.exchange}</td>
-            <td>{coin.quantity}</td>
-            <td>{coin.averagePrice}</td>
-            <td>{coin.currentPrice}</td>
-            <td>{coin.pAndL}</td>
+      <StyledDashboard>
+        <p>{username}'s Dashboard</p>
+        <StyledTable>
+          <p></p>
+          <tr>
+            <th>Coin Name</th>
+            <th>Exchange</th>
+            <th>Quantity</th>
+            <th>Average Price</th>
+            <th>Current Price</th>
+            <th>P & L</th>
           </tr>
-        ))}
-        <tr>
-          <td colSpan="5">Total P & L:</td>
-          <td>{data.totalPL}</td>
-        </tr>
-      </StyledTable>
-    </StyledDashboard>
+          {data.coins.map((coin) => (
+            <tr key={coin.coinID}>
+              <td>{coin.coinName}</td>
+              <td>{coin.exchange}</td>
+              <td>{coin.quantity}</td>
+              <td>{coin.averagePrice}</td>
+              <td>{coin.currentPrice}</td>
+              <td>{coin.pAndL}</td>
+            </tr>
+          ))}
+          <tr>
+            <td colSpan="5">Total P & L:</td>
+            <td>{data.totalPL}</td>
+          </tr>
+        </StyledTable>
+      </StyledDashboard>
+    </div>
   );
 }
 

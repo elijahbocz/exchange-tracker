@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import Header from "../Header";
 
-const StyledDashboardSubmission = styled.div`
+const StyledEntry = styled.div`
   text-align: center;
   h1 {
     font-size: 3rem;
@@ -26,7 +26,7 @@ const StyledForm = styled.form`
   }
 `;
 
-function DashboardSubmission(props) {
+function Entry(props) {
   const [coinID, setCoinID] = useState("");
   const [userID, setUserID] = useState("");
   const [coinSymbol, setCoinSymbol] = useState("");
@@ -93,7 +93,7 @@ function DashboardSubmission(props) {
         body: JSON.stringify(submission),
       })
         .then((res) => res.json())
-        .then((res) => {
+        .then(() => {
           props.history.push("/dashboard");
         });
     }
@@ -112,27 +112,29 @@ function DashboardSubmission(props) {
   }
 
   return (
-    <StyledDashboardSubmission>
-      <Header />
-      <p>New Coin</p>
-      <p className="error">{error}</p>
-      <StyledForm onSubmit={handleSubmit}>
-        <label>Coin Symbol</label>
-        <input id="coin-symbol" type="text" onChange={updateValues}></input>
-        <p></p>
-        <label>Exchange</label>
-        <input id="exchange" type="text" onChange={updateValues}></input>
-        <p></p>
-        <label>Quantity</label>
-        <input id="quantity" type="text" onChange={updateValues}></input>
-        <p></p>
-        <label>Average Price</label>
-        <input id="average-price" type="text" onChange={updateValues}></input>
-        <p></p>
-        <button>Submit</button>
-      </StyledForm>
-    </StyledDashboardSubmission>
+    <div className="entry-wrapper">
+      <StyledEntry>
+        <Header />
+        <p>New Coin</p>
+        <p className="error">{error}</p>
+        <StyledForm onSubmit={handleSubmit}>
+          <label>Coin Symbol</label>
+          <input id="coin-symbol" type="text" onChange={updateValues}></input>
+          <p></p>
+          <label>Exchange</label>
+          <input id="exchange" type="text" onChange={updateValues}></input>
+          <p></p>
+          <label>Quantity</label>
+          <input id="quantity" type="text" onChange={updateValues}></input>
+          <p></p>
+          <label>Average Price</label>
+          <input id="average-price" type="text" onChange={updateValues}></input>
+          <p></p>
+          <button>Submit</button>
+        </StyledForm>
+      </StyledEntry>
+    </div>
   );
 }
 
-export default withRouter(DashboardSubmission);
+export default withRouter(Entry);

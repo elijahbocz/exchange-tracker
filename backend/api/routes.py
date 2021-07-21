@@ -72,12 +72,12 @@ def get_dashboard():
             quantity = float(coin['quantity'])
             avg_price = float(coin['averagePrice'])
             cur_price = float(coin['currentPrice'])
-            p_and_l = (cur_price * quantity) - (avg_price * quantity)
+            p_and_l = round((cur_price * quantity) - (avg_price * quantity), 6)
             total_p_l += p_and_l
             coin['pAndL'] = p_and_l
         dashboard = {}
         dashboard['coins'] = coins
-        dashboard['totalPL'] = total_p_l
+        dashboard['totalPL'] = round(total_p_l, 6)
         print(dashboard)
         return(jsonify(dashboard))
     return request.json
