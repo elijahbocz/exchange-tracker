@@ -8,6 +8,11 @@ import Footer from "../Footer";
 const StyledContents = styled.div`
   padding: 1rem;
   text-align: center;
+
+  h2 {
+      font-size: 1.5rem;
+      padding-bottom: 0.5rem;
+  }
 `;
 
 const StyledLink = styled(Link)`

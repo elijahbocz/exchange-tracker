@@ -8,6 +8,15 @@ const StyledBackend = styled.div`
   text-align: center;
   padding: 1rem;
 
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+  }
+
   a {
     color: #8b786d;
     text-decoration: none;
@@ -43,6 +52,15 @@ const StyledBackend = styled.div`
   .schema {
     padding: 1rem;
   }
+
+  .putting-together {
+    padding: 1rem;
+    text-align: left;
+  }
+
+  .endpoints {
+    padding: 1rem;
+  }
 `;
 
 function Backend() {
@@ -50,7 +68,7 @@ function Backend() {
     <div className="backend-wrapper">
       <Header />
       <StyledBackend>
-        <h2>Coin Exchange Tracker Backend</h2>
+        <h1>Coin Exchange Tracker Backend</h1>
         <div className="tech-stack">
           <p>
             The backend for this application was developed and deployed on
@@ -70,7 +88,7 @@ function Backend() {
             and is used for the source of this application's data.
           </p>
         </div>
-        <h3>Installing Dependencies and Running the Backend</h3>
+        <h2>Installing Dependencies and Running the Backend</h2>
         <div className="installing-and-running">
           <p>
             The Python dependencies required to run the backend are stored
@@ -130,11 +148,11 @@ function Backend() {
           <code>* Debugger is active!</code>
           <code>* Debugger PIN: 516-540-820</code>
         </div>
-        <h3>MySQL Configuration</h3>
+        <h2>MySQL Configuration</h2>
         <div className="mysql-config">
           <p>
             Assuming MySQL is installed on Ubuntu 20.04, and a user with the
-            name <em>prod</em> within MySQL has appropriate access, first create
+            name <em>dev</em> within MySQL has appropriate access, first create
             the database:
           </p>
           <code>CREATE DATABASE exchange-tracker;</code>
@@ -142,6 +160,7 @@ function Backend() {
           <p>Set that database for subsequent commands:</p>
           <code>USE exchange_tracker;</code>
           <br />
+          <h3>Users</h3>
           <p>
             The first table needed is the <em>users</em> table, which stores
             user information, the schema is as follows:
@@ -166,6 +185,7 @@ function Backend() {
           <code> PRIMARY KEY (userID)</code>
           <code>);</code>
           <br />
+          <h3>Coins</h3>
           <p>
             The second table needed is the <em>coins</em> table, which stores
             the information of each coin that is associated with each user. The
@@ -199,7 +219,7 @@ function Backend() {
             with the quanity being the amount of coin purchased, and the
             averagePrice being the amount paid for the quantity. Finally, the
             dateAdded field corresponds time stamp for when the entry was made
-            into the database and will be in this format{" "}
+            into the database and will be in the format of{" "}
             <em>2021-07-20 16:52:36.307576</em>. The SQL command to create this
             table is as follows:
           </p>
@@ -217,6 +237,128 @@ function Backend() {
             <code> FOREIGN KEY (userID) REFERENCES users(userID)</code>
             <code>);</code>
           </div>
+          <br />
+          <h3>Coins List</h3>
+          <p>
+            The final table needed to be created will be the <em>coins_list</em>{" "}
+            table has the schema:
+          </p>
+          <div className="schema">
+            <code>coinID: VARCHAR(64)</code>
+            <code>coinSymbol: VARCHAR(64)</code>
+            <code>coinName: VARCHAR(64)</code>
+          </div>
+          <p>
+            This table contains all available cryptocurrencies in Coin Gecko's
+            database and is fetched directly from the API and stored in this
+            table. The purpose of this table serves as a way to check if the
+            input from the user contains a valid cyrptocurrency as well as
+            helping to adhere to the syntax that Coin Gecko uses in their API.
+            The table is created in the database with this command:
+          </p>
+          <code>CREATE TABLE coins_list (</code>
+          <code> coinID VARCHAR(64),</code>
+          <code> coinSymbol VARCHAR(64),</code>
+          <code> coinName VARCHAR(64)</code>
+          <code>);</code>
+          <p>
+            This schema is simple and the data stored resembles what is stored
+            in the <em>coins</em> table.
+          </p>
+        </div>
+        <h2>Putting the Pieces Together</h2>
+        <div className="putting-together">
+          <p>
+            Now that the Python backend and MySQL are installed and configured,
+            a bit explanation on how the backend works is in order. The backend
+            uses Flask as the web framework, which aids in the process of
+            creating a WSGI (Web Server Gateway Interface), which is used for
+            creating our API endpoints. Starting from the backend root
+            directory, the API endpoints are created in <em>/api/routes.py</em>.
+            The endpoints available are:
+            <div className="endpoints">
+              <ul>
+                <li>
+                  <code>/api/register-user</code>
+                  <code>params: username, password</code>
+                  <p>
+                    This endpoint accepts a POST request, with a body containing
+                    the <em>username</em> and <em>password</em> that is going to
+                    be used to create a new entry in the <em>users</em> table.
+                    The <em>username</em> is first used in a query to the{" "}
+                    <em>users</em> table, if no match is found the user will be
+                    created and a success message will be returned to the
+                    frontend. If the username already exists in the database, an
+                    signifying this will be sent back to the frontend.
+                  </p>
+                </li>
+                <br />
+                <li>
+                  <code>/api/login-user</code>
+                  <code>params: username, password</code>
+                  <p>
+                    This endpoint accepts a POST request, with a body containing
+                    the <em>username</em> and <em>password</em>, the{" "}
+                    <em>username</em> is first checked for existence in the
+                    database. Upon successful retrieval, the password is then
+                    checked against the hash stored in <em>users</em>. If the
+                    credentials are validated a successful message is returned
+                    to the frontend.
+                  </p>
+                </li>
+                <br />
+                <li>
+                  <code>/api/new-coin</code>
+                  <code>
+                    params: coinID, userID, coinName, coinSymbol, exchange,
+                    quantity, averagePrice
+                  </code>
+                  <p>
+                    This endpoint accepts a POST request, with the required
+                    parameters to create a new entry in the <em>coins</em>{" "}
+                    table. Of the required parameters, only 4 will be taken from
+                    input by the user:{" "}
+                    <em>coinSymbol, exchange, quantity, and averagePrice</em>.
+                    The other parameters will be handled by the frontend's logic
+                    and passed in along with user data. If the new entry is
+                    stored correctly, a success message will be returned to the
+                    frontend, otherwise an error will be returned.
+                  </p>
+                </li>
+                <br />
+                <li>
+                  <code>/api/get-coins-list</code>
+                  <code>No parameters needed</code>
+                  <p>
+                    This endpoint accepts a GET request and will return all of
+                    the entries in the <em>coins_list</em> table. This is used
+                    for validating user input on the frontend for new coins to
+                    be stored in <em>coins</em>.
+                  </p>
+                </li>
+                <br />
+                <li>
+                  <code>/api/get-dashboard</code>
+                  <code>params: userID</code>
+                  <p>
+                    This endpoint accepts a POST request, with the userID as the
+                    only parameter. Upon a valid user ID being sent with the
+                    request, all of the entries in the <em>coins</em> table
+                    associated with the user ID will be retrieved from the
+                    table. The current prices of each coin retrieved from the
+                    table will then be fetched from the Coin Gecko API. The
+                    profits and losses for each entry in the <em>coins</em>{" "}
+                    table will then be calculated against the current price that
+                    has been fetched from Coin Gecko. The total profit and loss
+                    will also be kept as a running sum to be displayed on the
+                    dashboard as well. All of this data is then packaged into a
+                    JSON object on the backend and then returned to the frontend
+                    to display to the user.
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </p>
         </div>
       </StyledBackend>
       <Footer />
