@@ -180,7 +180,7 @@ function Backend() {
             database.
           </p>
           <br />
-          <p>The table is created using</p>
+          <p>The table is created using the follow command:</p>
           <code>CREATE TABLE users (</code>
           <code> userID VARCHAR(36), </code>
           <code> username VARCHAR(20),</code>
@@ -223,9 +223,9 @@ function Backend() {
             averagePrice being the amount paid for the quantity. Finally, the
             dateAdded field corresponds time stamp for when the entry was made
             into the database and will be in the format of{" "}
-            <em>2021-07-20 16:52:36.307576</em>. The SQL command to create this
-            table is as follows:
+            <em>2021-07-20 16:52:36.307576</em>.{" "}
           </p>
+          <p>The SQL command to create this table is as follows:</p>
           <div className="schema">
             <code>CREATE TABLE coins (</code>
             <code> coinID VARCHAR(36),</code>
