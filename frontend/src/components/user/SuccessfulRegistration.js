@@ -1,30 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "../Header";
 
 const StyledLogin = styled.div`
-  text-align: center;
+  background: #ebf5ee;
   padding: 1rem;
-  margin: 1rem;
-
+  margin: 1rem 20%;
+  text-align: center;
   .error {
     color: red;
   }
 `;
 
 const StyledForm = styled.form`
-  margin: 1rem;
-  label {
-    margin: 1rem;
+  button {
+    background: #78A1BB;
+    border-radius: 6px;
+    color: #283044;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  button:hover {
+    cursor: pointer;
+    opacity: .9;
   }
 `;
 
-function SuccessfulRegistration(props) {
+const StyledInputGroup = styled.div`
+  padding: 0.75rem;
+  text-align: left;
+
+  label {
+    color: #283044;
+    padding-right: rem;
+  }
+
+  input {
+    background: #fff;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    width: 100%;
+  }
+`;
+
+function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const userLoggedIn = localStorage.getItem("user");
+    if (userLoggedIn) {
+      props.history.push("/dashboard");
+    }
+  }, []);
 
   function handleLogin(e) {
     e.preventDefault();
@@ -61,14 +91,21 @@ function SuccessfulRegistration(props) {
       <Header />
       <StyledLogin>
         <p className="error">{error}</p>
-        <p>Registration successful, please login:</p>
+        <p>Login</p>
         <StyledForm onSubmit={handleLogin}>
-          <label>Username</label>
-          <input type="text" id="username" onChange={updateValues}></input>
-          <p></p>
-          <label>Password</label>
-          <input type="password" id="password" onChange={updateValues}></input>
-          <p></p>
+          <p>Registration successful, please login:</p>
+          <StyledInputGroup>
+            <label>Username</label>
+            <input type="text" id="username" onChange={updateValues}></input>
+          </StyledInputGroup>
+          <StyledInputGroup>
+            <label>Password</label>
+            <input
+              type="password"
+              id="password"
+              onChange={updateValues}
+            ></input>
+          </StyledInputGroup>
           <button>Login</button>
         </StyledForm>
       </StyledLogin>
@@ -76,4 +113,4 @@ function SuccessfulRegistration(props) {
   );
 }
 
-export default withRouter(SuccessfulRegistration);
+export default withRouter(Login);

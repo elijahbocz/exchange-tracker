@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Header from "./Header";
+import Footer from "./Footer";
 
 const StyledHomeContent = styled.div`
   text-align: center;
+
 `;
 
 const StyledHomeText = styled.div`
@@ -17,12 +19,12 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 
   button {
-    background: black;
+    background: #78A1BB;
     border: none;
     border-radius: 6px;
-    color: white;
+    color: #fff;
     margin: 1rem;
-    padding: 1rem;
+    padding: 0.5rem;
     width: 100px;
   }
 
@@ -60,6 +62,7 @@ function Home() {
           <button>Register</button>
         </StyledLink>
       </StyledHomeContent>
+      <Footer />
     </div>
   );
 }

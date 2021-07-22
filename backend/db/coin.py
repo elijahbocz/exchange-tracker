@@ -22,8 +22,7 @@ def add_new_coin(coin_id, user_id, coin_name, coin_symbol, exchange, quantity, a
         sql = "INSERT INTO `coins` (`coinID`, `userID`, `coinName`, `coinSymbol`, `exchange`, `quantity`, `averagePrice`, `dateAdded`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         cursor.execute(sql, (coin_id, user_id, coin_name, coin_symbol, exchange, quantity, avg_price, now))
 
-    # connection is not autocommit by default. So you must commit to save
-    # your changes.
+    # connection is not autocommit by default
     connection.commit()
 
 

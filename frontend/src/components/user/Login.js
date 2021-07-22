@@ -5,19 +5,42 @@ import styled from "styled-components";
 import Header from "../Header";
 
 const StyledLogin = styled.div`
-  text-align: center;
+  background: #ebf5ee;
   padding: 1rem;
-  margin: 1rem;
-
+  margin: 1rem 20%;
+  text-align: center;
   .error {
     color: red;
   }
 `;
 
 const StyledForm = styled.form`
-  margin: 1rem;
+  button {
+    background: #78A1BB;
+    border-radius: 6px;
+    color: #283044;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  button:hover {
+    cursor: pointer;
+    opacity: .9;
+  }
+`;
+
+const StyledInputGroup = styled.div`
+  padding: 0.75rem;
+  text-align: left;
+
   label {
-    margin: 1rem;
+    color: #283044;
+    padding-right: rem;
+  }
+
+  input {
+    background: #fff;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    width: 100%;
   }
 `;
 
@@ -70,12 +93,18 @@ function Login(props) {
         <p className="error">{error}</p>
         <p>Login</p>
         <StyledForm onSubmit={handleLogin}>
-          <label>Username</label>
-          <input type="text" id="username" onChange={updateValues}></input>
-          <p></p>
-          <label>Password</label>
-          <input type="password" id="password" onChange={updateValues}></input>
-          <p></p>
+          <StyledInputGroup>
+            <label>Username</label>
+            <input type="text" id="username" onChange={updateValues}></input>
+          </StyledInputGroup>
+          <StyledInputGroup>
+            <label>Password</label>
+            <input
+              type="password"
+              id="password"
+              onChange={updateValues}
+            ></input>
+          </StyledInputGroup>
           <button>Login</button>
         </StyledForm>
       </StyledLogin>

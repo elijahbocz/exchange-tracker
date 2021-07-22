@@ -4,24 +4,41 @@ import styled from "styled-components";
 
 const StyledHeader = styled.nav`
   text-align: center;
-
+  background: #283044;
+  padding: 2rem;
   h1 {
+    color: #78A1BB;
     font-size: 3rem;
   }
 `;
 
 const StyledLink = styled(Link)`
-  color: grey;
+  color: #BFA89E;
   text-decoration: none;
-`;
 
-const StyledUserNav = styled.nav`
-  a {
-    margin: 2rem;
+  :hover {
+    color: #EBF5EE;
   }
 `;
 
-function Header() {
+const StyledUserNav = styled.nav`
+  padding: 0.75rem;
+
+  a {
+    margin: 0 2rem;
+  }
+
+  .logout-btn {
+    color: #BFA89E;
+    margin: 0 2rem;
+  }
+  .logout-btn:hover {
+    cursor: pointer;
+    color: #EBF5EE;
+  }
+`;
+
+function Header(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -32,6 +49,11 @@ function Header() {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    props.history.push("/");
+  };
+
   return (
     <StyledHeader>
       <h1>Coin Exchange Tracker</h1>
@@ -40,9 +62,10 @@ function Header() {
           <StyledLink className="app-link" to="/dashboard">
             Dashboard
           </StyledLink>
-          <StyledLink className="app-link" to="/new-coin">
+          <StyledLink className="app-link" to="/dashboard-entry">
             New Coin
           </StyledLink>
+          <button onClick={handleLogout} className="logout-btn">Logout</button>
         </StyledUserNav>
       ) : (
         <StyledUserNav>

@@ -6,7 +6,8 @@ import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import SuccessfulRegistration from "./components/user/SuccessfulRegistration";
 import Dashboard from "./components/dashboard/Dashboard";
-import NewCoinForm from "./components/dashboard/NewCoinForm";
+import Entry from "./components/dashboard/Entry";
+import Contents from "./components/documentation/Contents";
 
 function App() {
   return (
@@ -29,8 +30,11 @@ function App() {
             <Route path="/dashboard">
               <Dashboard />
             </Route>
-            <Route path="/new-coin">
-              <NewCoinForm />
+            <Route path="/dashboard-entry">
+              <Entry />
+            </Route>
+            <Route path="/documentation/contents">
+              <Contents />
             </Route>
           </Switch>
         </BrowserRouter>
