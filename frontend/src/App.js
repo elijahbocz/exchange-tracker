@@ -5,9 +5,13 @@ import Home from "./components/Home";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import SuccessfulRegistration from "./components/user/SuccessfulRegistration";
+
 import Dashboard from "./components/dashboard/Dashboard";
 import Entry from "./components/dashboard/Entry";
+
 import Contents from "./components/documentation/Contents";
+import Backend from "./components/documentation/Backend";
+import Frontend from "./components/documentation/Frontend";
 
 function App() {
   return (
@@ -35,6 +39,12 @@ function App() {
             </Route>
             <Route path="/documentation/contents">
               <Contents />
+            </Route>
+            <Route path="/documentation/backend">
+              <Backend />
+            </Route>
+            <Route path="/documentation/frontend">
+              <Frontend />
             </Route>
           </Switch>
         </BrowserRouter>
