@@ -6,12 +6,12 @@ import Header from "../Header";
 import Footer from "../Footer";
 
 const StyledContents = styled.div`
-    padding: 1rem;
-    text-align: center;
+  padding: 1rem;
+  text-align: center;
 `;
 
 const StyledLink = styled(Link)`
-  color: #BFA89E;
+  color: #8b786d;
   text-decoration: none;
 
   :hover {
@@ -25,10 +25,27 @@ function Contents() {
       <Header />
       <StyledContents>
         <h2>Documentation Contents</h2>
-        <p>The documentation for this application is split into the backend and the frontend.</p>
+        <p>
+          The documentation for this application is split into the backend and
+          the frontend.
+        </p>
         <br></br>
-        <p>The <span><StyledLink to="/documentation/backend">Backend</StyledLink></span> portion covers how Python and MySQL are utilized as an API and database respectively.</p>
-        <p>The <span><StyledLink to="/documentation/frontend">Frontend</StyledLink></span> portion covers how React is utilized for the user interface and displaying of data fetched from the backend.</p>
+        <p>
+          The{" "}
+          <span>
+            <StyledLink to="/documentation/backend">Backend</StyledLink>
+          </span>{" "}
+          portion covers how Python and MySQL are utilized as an API and
+          database respectively.
+        </p>
+        <p>
+          The{" "}
+          <span>
+            <StyledLink to="/documentation/frontend">Frontend</StyledLink>
+          </span>{" "}
+          portion covers how React is utilized for the user interface and
+          displaying of data fetched from the backend.
+        </p>
       </StyledContents>
       <Footer />
     </div>
