@@ -3,6 +3,7 @@ import { withRouter, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "../Header";
+import Footer from "../Footer";
 
 const StyledDashboard = styled.div`
   padding: 1rem;
@@ -100,6 +101,7 @@ function Dashboard(props) {
           </tr>
         </StyledTable>
       </StyledDashboard>
+      <Footer />
     </div>
   );
 }

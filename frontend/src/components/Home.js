@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Header from "./Header";
+import Footer from "./Footer";
 
 const StyledHomeContent = styled.div`
   text-align: center;
@@ -61,6 +62,7 @@ function Home() {
           <button>Register</button>
         </StyledLink>
       </StyledHomeContent>
+      <Footer />
     </div>
   );
 }

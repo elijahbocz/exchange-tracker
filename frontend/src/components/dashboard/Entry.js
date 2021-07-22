@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "../Header";
+import Footer from "../Footer";
 
 const StyledEntry = styled.div`
   padding: 1rem;
@@ -164,6 +165,7 @@ function Entry(props) {
           <button>Submit</button>
         </StyledForm>
       </StyledEntry>
+      <Footer />
     </div>
   );
 }
