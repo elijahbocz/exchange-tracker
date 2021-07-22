@@ -93,7 +93,7 @@ function Backend() {
           <p>
             The Python dependencies required to run the backend are stored
             inside of the requirements.txt within the root directory of the
-            backend folder, and will be displayed here as well:
+            backend folder, and are displayed here as well:
           </p>
           <div className="dependency-list">
             <code>certifi==2021.5.30 </code>
@@ -158,7 +158,7 @@ function Backend() {
             name <em>dev</em> within MySQL has appropriate access, first create
             the database:
           </p>
-          <code>CREATE DATABASE exchange-tracker;</code>
+          <code>CREATE DATABASE exchange_tracker;</code>
           <br />
           <p>Set that database for subsequent commands:</p>
           <code>USE exchange_tracker;</code>
@@ -221,8 +221,8 @@ function Backend() {
             averagePrice are details about the user's purchase of their coin,
             with the quanity being the amount of coin purchased, and the
             averagePrice being the amount paid for the quantity. Finally, the
-            dateAdded field corresponds time stamp for when the entry was made
-            into the database and will be in the format of{" "}
+            dateAdded field corresponds to a time stamp for when the entry was
+            made into the database and will be in the format of{" "}
             <em>2021-07-20 16:52:36.307576</em>.{" "}
           </p>
           <p>The SQL command to create this table is as follows:</p>
@@ -295,7 +295,7 @@ function Backend() {
                     <em>users</em> table, if no match is found the user will be
                     created and a success message will be returned to the
                     frontend. If the username already exists in the database, an
-                    signifying this will be sent back to the frontend.
+                    error signifying this will be sent back to the frontend.
                   </p>
                 </li>
                 <br />
@@ -309,7 +309,7 @@ function Backend() {
                     database. Upon successful retrieval, the password is then
                     checked against the hash stored in <em>users</em>. If the
                     credentials are validated a successful message is returned
-                    to the frontend.
+                    to the frontend, otherwise an error message is returned.
                   </p>
                 </li>
                 <br />
@@ -323,12 +323,12 @@ function Backend() {
                     This endpoint accepts a POST request, with the required
                     parameters to create a new entry in the <em>coins</em>{" "}
                     table. Of the required parameters, only 4 will be taken from
-                    input by the user:{" "}
-                    <em>coinSymbol, exchange, quantity, and averagePrice</em>.
-                    The other parameters will be handled by the frontend's logic
-                    and passed in along with user data. If the new entry is
-                    stored correctly, a success message will be returned to the
-                    frontend, otherwise an error will be returned.
+                    input by the user: <em>coinSymbol, exchange, quantity,</em>{" "}
+                    and <em>averagePrice</em>. The other parameters will be
+                    handled by the frontend's logic and passed in along with
+                    user data. If the new entry is stored correctly, a success
+                    message will be returned to the frontend, otherwise an error
+                    will be returned.
                   </p>
                 </li>
                 <br />

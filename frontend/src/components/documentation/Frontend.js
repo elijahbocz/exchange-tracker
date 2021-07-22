@@ -51,14 +51,14 @@ function Frontend() {
             The frontend for this application was developed and deployed on
             Ubuntu 20.04, and the commands in this documentation will reflect
             this environment. React, specifically React version 17.0.2, was used
-            for creating the user interface and Yarn version 1.22.10 was used as
-            the package manager for Node modules.
+            for creating the user interface and Yarn, version 1.22.10, was used
+            as the package manager for Node modules.
           </p>
         </div>
         <h2>Dependencies</h2>
         <div className="block">
           <p>
-            The dependencies the frontend requires are stored in the{" "}
+            The dependencies for the frontend are stored in the{" "}
             <em>package.json</em> file in the <em>frontend/</em> root directory,
             and are listed here:
           </p>
@@ -89,7 +89,7 @@ function Frontend() {
             <a href="https://github.com/elijahbocz/exchange-tracker">Github</a>,
             in the <em>frontend/</em> root directory run
           </p>
-          <code>yarn install</code>
+          <code>$ yarn install</code>
         </div>
         <h2>Running the Application</h2>
         <div className="block">
@@ -97,15 +97,15 @@ function Frontend() {
             After the installation completes, the frontend can be started with
             the command
           </p>
-          <code>yarn start</code>
+          <code>$ yarn start</code>
           <br />
           <p>
             There is also a command available to start the API from the frontend
             directory as well:
           </p>
-          <code>yarn start-api</code>
+          <code>$ yarn start-api</code>
           <p>which will run this command in the background:</p>
-          <code>cd ../backend && venv/bin/flask run --no-debugger</code>
+          <code>$ cd ../backend && venv/bin/flask run --no-debugger</code>
         </div>
       </StyledFrontend>
       <Footer />
