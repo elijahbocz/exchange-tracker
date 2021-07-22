@@ -118,8 +118,11 @@ function Backend() {
             <code>Werkzeug==2.0.1</code>
           </div>
           <p>
-            Assuming a clean Python3 virtual environment, activate the virtual
-            environment from the backend root directory using{" "}
+            Assuming a clean Python3 virtual environment after cloning the
+            repository from{" "}
+            <a href="https://github.com/elijahbocz/exchange-tracker">Github</a>,
+            activate the virtual environment from the backend root directory,{" "}
+            <em>backend/</em>, using:
             <code>$ source venv/bin/activate</code>
           </p>
           <br />
@@ -130,7 +133,7 @@ function Backend() {
           <br />
           <p>
             Assuming the installation completed successfully, the backend should
-            now be able to be run
+            now be able to be run:
             <code>$ flask run</code>
           </p>
           <br />
@@ -273,9 +276,12 @@ function Backend() {
             a bit explanation on how the backend works is in order. The backend
             uses Flask as the web framework, which aids in the process of
             creating a WSGI (Web Server Gateway Interface), which is used for
-            creating our API endpoints. Starting from the backend root
-            directory, the API endpoints are created in <em>/api/routes.py</em>.
-            The endpoints available are:
+            creating our API endpoints. The API endpoints are available through
+            their routes and helper functions are used inside of the routes to
+            handle the storing of data sent to the appropriate route in the
+            database. Starting from the backend root directory, the API
+            endpoints are created in <em>/api/routes.py</em>. The endpoints
+            available are:
             <div className="endpoints">
               <ul>
                 <li>
