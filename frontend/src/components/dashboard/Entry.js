@@ -120,7 +120,7 @@ function Entry(props) {
         userID: userID,
         coinName: foundCoin.coinName,
         coinSymbol: coinSymbol,
-        exchange: exchange,
+        exchange: foundExchange.exchangeName,
         quantity: quantity,
         averagePrice: averagePrice,
       };
