@@ -21,9 +21,9 @@ const StyledForm = styled.form`
   background: #ebf5ee;
   padding: 1rem;
   margin: 1rem 20%;
- 
+
   button {
-    background: #78A1BB;
+    background: #78a1bb;
     border-radius: 6px;
     color: #283044;
     padding: 0.5rem;
@@ -31,7 +31,7 @@ const StyledForm = styled.form`
   }
   button:hover {
     cursor: pointer;
-    opacity: .9;
+    opacity: 0.9;
   }
 `;
 
@@ -59,6 +59,7 @@ function Entry(props) {
   const [averagePrice, setAveragePrice] = useState("");
   const [error, setError] = useState("");
   const [coins, setCoins] = useState([]);
+  const [validExchanges, setValidExchanges] = useState([]);
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -67,7 +68,7 @@ function Entry(props) {
     } else {
       const parsedUser = JSON.parse(userLoggedIn);
       setUserID(parsedUser.userID);
-      fetch("http://127.0.0.1:5000/api/get-coins-list", {
+      fetch("http://127.0.0.1:5000/api/get-lists", {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -75,10 +76,18 @@ function Entry(props) {
       })
         .then((res) => res.json())
         .then((res) => {
-          setCoins(res);
+          setCoins(res.coins);
+          setValidExchanges(res.exchanges);
         });
     }
   }, []);
+
+  function isNumeric(input) {
+    if (typeof input != "string") {
+      return false;
+    }
+    return !isNaN(input) && !isNaN(parseFloat(input));
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -86,7 +95,11 @@ function Entry(props) {
       (coin) =>
         coin.coinSymbol === coinSymbol && !coin.coinName.includes("Binance")
     );
-
+    const foundExchange = validExchanges.find(
+      (validExchange) =>
+        validExchange.exchangeName.toLowerCase() === exchange.toLowerCase()
+    );
+    console.log(foundExchange);
     if (
       coinSymbol === "" ||
       exchange === "" ||
@@ -98,7 +111,10 @@ function Entry(props) {
       setError("Invalid Coin Symbol");
     } else if (quantity < 0 || averagePrice < 0) {
       setError("Values can not be negative");
-      // TODO: CHECK IF QUANTITY AND AVG PRICE ARE NUMBERS
+    } else if (!isNumeric(quantity) || !isNumeric(averagePrice)) {
+      setError("Quanity and Average Price must be valid numbers");
+    } else if (foundExchange === undefined) {
+      setError("Invalid Exchange Name");
     } else {
       const submission = {
         coinID: foundCoin.coinID,

@@ -2,6 +2,7 @@ from db.login_user import login
 from db.register_user import registration, valid_username
 from db.coin import add_new_coin, get_user_coins
 from db.coins_list import fetch_coins_list
+from db.exchanges import fetch_exchanges_names
 from external.simple import get_simple_price
 from flask import json, request, jsonify
 
@@ -48,9 +49,14 @@ def new_coin():
     return request.json
 
 
-@app.route('/api/get-coins-list')
-def get_coins_list():
-    return jsonify(fetch_coins_list())
+@app.route('/api/get-lists')
+def get_lists():
+    coins = fetch_coins_list()
+    exchanges = fetch_exchanges_names()
+    lists = {}
+    lists['coins'] = coins
+    lists['exchanges'] = exchanges
+    return jsonify(lists)
 
 
 @app.route('/api/get-dashboard', methods=['POST'])
