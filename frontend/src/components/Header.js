@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledHeader = styled.nav`
@@ -84,4 +84,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default withRouter(Header);
