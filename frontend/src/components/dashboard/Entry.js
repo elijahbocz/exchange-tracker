@@ -99,7 +99,6 @@ function Entry(props) {
       (validExchange) =>
         validExchange.exchangeName.toLowerCase() === exchange.toLowerCase()
     );
-    console.log(foundExchange);
     if (
       coinSymbol === "" ||
       exchange === "" ||
@@ -109,12 +108,12 @@ function Entry(props) {
       setError("Fields can not be empty");
     } else if (foundCoin === undefined) {
       setError("Invalid Coin Symbol");
-    } else if (quantity < 0 || averagePrice < 0) {
-      setError("Values can not be negative");
-    } else if (!isNumeric(quantity) || !isNumeric(averagePrice)) {
-      setError("Quanity and Average Price must be valid numbers");
     } else if (foundExchange === undefined) {
       setError("Invalid Exchange Name");
+    } else if (!isNumeric(quantity) || !isNumeric(averagePrice)) {
+      setError("Quantity and Average Price must be valid numbers");
+    } else if (parseFloat(quantity) < 0 || parseFloat(averagePrice) < 0) {
+      setError("Quantity and Average Price can not be negative");
     } else {
       const submission = {
         coinID: foundCoin.coinID,
