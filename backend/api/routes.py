@@ -62,16 +62,25 @@ def get_lists():
 @app.route('/api/get-dashboard', methods=['POST'])
 def get_dashboard():
     if request.method == 'POST':
+        # Get the json request
         req = request.json
         user_id = req['userID']
+
+        # get coins with associated user ID
         coins = get_user_coins(user_id)
+        print(coins)
+        
+        # parse the user's coins and pick out the simple ids
+        # these ids will be used for getting the current price data
         coin_ids = []
         for coin in coins:
-            coin_ids.append(coin['coinID'])
+            # coinSimpleId will be bitcoin, ethereum
+            coin_ids.append(coin['coinSimpleID'])
+        # get the current prices from CoinGecko in usd
         prices = get_simple_price(",".join(coin_ids), 'usd')
         for key in prices.keys():
             for coin in coins:
-                if (coin['coinID'] == key):
+                if (coin['coinSimpleID'] == key):
                     coin['currentPrice'] = prices[key]['usd']
         total_p_l = 0
         for coin in coins:

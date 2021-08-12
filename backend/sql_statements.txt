@@ -1,5 +1,7 @@
-create table users (userID VARCHAR(36), username VARCHAR(20), password VARCHAR(20));
+create table users (userID VARCHAR(36), username VARCHAR(20), password VARCHAR(150));
 
-create table coins (coinID VARCHAR(36), userID VARCHAR(36), coinName VARCHAR(50), coinSymbol VARCHAR(10), exchange VARCHAR(20), quantity VARCHAR(16), averagePrice VARCHAR(16), dateAdded VARCHAR(32), PRIMARY KEY(coinID), FOREIGN KEY (userID) REFERENCES users(userID));
+create table coins (coinID MEDIUMINT AUTO_INCREMENT, coinSimpleID VARCHAR(36), userID VARCHAR(36), coinName VARCHAR(50), coinSymbol VARCHAR(10), exchange VARCHAR(20), quantity VARCHAR(16), averagePrice VARCHAR(16), dateAdded VARCHAR(32), PRIMARY KEY(coinID));
 
 create table coins_list (coinID VARCHAR(64), coinSymbol VARCHAR(64), coinName VARCHAR(64));
+
+create table exchanges_list (exchangeID VARCHAR(32), exchangeName VARCHAR(32));

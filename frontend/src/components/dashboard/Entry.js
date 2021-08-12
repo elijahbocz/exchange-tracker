@@ -125,7 +125,7 @@ function Entry(props) {
         quantity: quantity,
         averagePrice: averagePrice,
       };
-      fetch("http://165.22.183.86/api/new-coin", {
+      fetch("http://127.0.0.1:5000/api/new-coin", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -134,6 +134,7 @@ function Entry(props) {
       })
         .then((res) => res.json())
         .then(() => {
+          console.log("TESTSTSTSTS");
           props.history.push("/dashboard");
         });
     }
