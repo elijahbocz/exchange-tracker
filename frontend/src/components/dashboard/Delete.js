@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 
 import Header from "../Header";
 import Footer from "../Footer";
+import useWindowDimensions from "./useWindowDimensions";
 
 const StyledDelete = styled.div`
   padding: 1rem;
@@ -12,6 +13,27 @@ const StyledDelete = styled.div`
 
   .error {
     color: #ba2d13;
+  }
+
+  .rowNotToBeDeleted {
+    background: #ebf5ee;
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+
+  .rowNotToBeDeleted p {
+    padding: 0.25rem;
+  }
+
+  .rowToBeDeleted {
+    background: #c49991;
+    color: #fff;
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+
+  .rowToBeDeleted p {
+    padding: 0.25rem;
   }
 `;
 
@@ -59,15 +81,19 @@ const StyledTable = styled.table`
   }
 `;
 
+const StyledCard = styled.div`
+`;
+
 function Delete(props) {
   const [username, setUsername] = useState("");
-  const rowRefs = useRef([]);
   const [toDelete, setToDelete] = useState([]);
   const [error, setError] = useState("");
+  const rowRefs = useRef([]);
   const [data, setData] = useState({
     coins: [],
     totalPL: 0,
   });
+  const { height, width } = useWindowDimensions();
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -94,10 +120,10 @@ function Delete(props) {
     e.preventDefault();
     console.log(toDelete);
     if (toDelete.length === 0) {
-      setError("No coins selected, nothing was deleted")
+      setError("No coins selected, nothing was deleted");
     } else {
       const submission = {
-        toDelete: toDelete
+        toDelete: toDelete,
       };
       fetch("http://127.0.0.1:5000/api/delete-coin", {
         method: "POST",
@@ -135,7 +161,7 @@ function Delete(props) {
     if (!toDelete.includes(rowToBeDeleted.id)) {
       rowToBeDeleted.className = "rowToBeDeleted";
     } else {
-      rowToBeDeleted.className = "";
+      rowToBeDeleted.className = "rowNotToBeDeleted";
     }
   }
 
@@ -148,57 +174,64 @@ function Delete(props) {
       <StyledDelete>
         <p>Select the coins to delete:</p>
         <p className="error">{error}</p>
-        <StyledForm onSubmit={handleSubmit}>
-          <StyledTable>
-            <tr>
-              <th>Coin Name</th>
-              <th>Exchange</th>
-              <th>Quantity</th>
-              <th>Average Price</th>
-              <th>Delete</th>
-            </tr>
-            {data.coins.map((coin, i) => (
-              <tr
-                key={coin.coinID + coin.quantity}
-                id={coin.coinID}
-                ref={(el) => (rowRefs.current[i] = el)}
-              >
-                <td>{coin.coinName}</td>
-                <td>{coin.exchange}</td>
-                <td>{coin.quantity}</td>
-                <td>{coin.averagePrice}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    value={coin.coinID}
-                    onChange={handleChange(i)}
-                  ></input>
-                </td>
+        {width > 767.8 ? (
+          <StyledForm onSubmit={handleSubmit}>
+            <StyledTable>
+              <tr>
+                <th>Coin Name</th>
+                <th>Exchange</th>
+                <th>Quantity</th>
+                <th>Average Price</th>
+                <th>Delete</th>
               </tr>
-            ))}
-          </StyledTable>
-          {data.coins.map((coin, i) => (
-              <p
+              {data.coins.map((coin, i) => (
+                <tr
+                  key={coin.coinID + coin.quantity}
+                  id={coin.coinID}
+                  ref={(el) => (rowRefs.current[i] = el)}
+                >
+                  <td>{coin.coinName}</td>
+                  <td>{coin.exchange}</td>
+                  <td>{coin.quantity}</td>
+                  <td>{coin.averagePrice}</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      value={coin.coinID}
+                      onChange={handleChange(i)}
+                    ></input>
+                  </td>
+                </tr>
+              ))}
+            </StyledTable>
+            <button>Submit</button>
+          </StyledForm>
+        ) : (
+          <StyledForm>
+            {data.coins.map((coin, i) => (
+              <StyledCard
                 key={coin.coinID + coin.quantity}
                 id={coin.coinID}
+                className="rowNotToBeDeleted"
                 ref={(el) => (rowRefs.current[i] = el)}
               >
-                <p>{coin.coinName}</p>
-                <p>{coin.exchange}</p>
-                <p>{coin.quantity}</p>
-                <p>{coin.averagePrice}</p>
+                <p>Coin Name: {coin.coinName}</p>
+                <p>Exchange: {coin.exchange}</p>
+                <p>Quantity: {coin.quantity}</p>
+                <p>Average Price: {coin.averagePrice}</p>
                 <p>
+                  Delete:{" "}
                   <input
                     type="checkbox"
                     value={coin.coinID}
                     onChange={handleChange(i)}
                   ></input>
                 </p>
-              </p>
+              </StyledCard>
             ))}
-
-          <button>Submit</button>
-        </StyledForm>
+            <button>Submit</button>
+          </StyledForm>
+        )}
       </StyledDelete>
       <Footer />
     </div>
