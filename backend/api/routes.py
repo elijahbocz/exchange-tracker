@@ -1,6 +1,6 @@
 from db.login_user import login
 from db.register_user import registration, valid_username
-from db.coin import add_new_coin, delete_existing_coin, get_user_coins, delete_existing_coin
+from db.coin import add_new_coin, delete_existing_coin, get_user_coins, delete_existing_coin, get_coin_image
 from db.coins_list import fetch_coins_list
 from db.exchanges import fetch_exchanges_names
 from external.simple import get_simple_price
@@ -37,7 +37,6 @@ def login_user():
 @app.route('/api/get-dashboard', methods=['POST'])
 def get_dashboard():
     if request.method == 'POST':
-        # Get the json request
         req = request.json
         user_id = req['userID']
 
@@ -53,18 +52,28 @@ def get_dashboard():
             coin_ids.append(coin['coinSimpleID'])
         # get the current prices from CoinGecko in usd
         prices = get_simple_price(",".join(coin_ids), 'usd')
+        # match the ids of the prices and coins
         for key in prices.keys():
             for coin in coins:
+                # if keys are equal, create the current price for the coin
                 if (coin['coinSimpleID'] == key):
                     coin['currentPrice'] = prices[key]['usd']
+        # keeps track of the running sum for the profits and losses
         total_p_l = 0
+        # loop through coins and calculate the profits and losses
         for coin in coins:
+            # calculate the profit and loss for the coin
             quantity = float(coin['quantity'])
             avg_price = float(coin['averagePrice'])
             cur_price = float(coin['currentPrice'])
             p_and_l = round((cur_price * quantity) - (avg_price * quantity), 6)
-            total_p_l += p_and_l
             coin['pAndL'] = p_and_l
+
+            # update the running sum for profits and losses
+            total_p_l += p_and_l
+
+            # fetch the image for the current coin
+            coin['image'] = get_coin_image(coin['coinSimpleID'])
         dashboard = {}
         dashboard['coins'] = coins
         dashboard['totalPL'] = round(total_p_l, 6)

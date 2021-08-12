@@ -46,3 +46,11 @@ def delete_existing_coin(coin_id):
 
     # connection is not autocommit by default
     connection.commit()
+
+
+def get_coin_image(coin_id):
+    connection = create_connection()
+    with connection.cursor() as cursor:
+        sql = "SELECT `imageLink` FROM `coins_images` WHERE `coinID`=%s"
+        cursor.execute(sql, (coin_id))
+        return cursor.fetchall()

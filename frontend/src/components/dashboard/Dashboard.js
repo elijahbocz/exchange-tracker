@@ -2,12 +2,46 @@ import React, { useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import styled from "styled-components";
 
+import useWindowDimensions from "./useWindowDimensions";
 import Header from "../Header";
 import Footer from "../Footer";
 
 const StyledDashboard = styled.div`
   padding: 1rem;
   text-align: center;
+
+  .profit {
+    color: #00ce2a;
+  }
+
+  .loss {
+    color: #ba2d13;
+  }
+
+  .card {
+    background: #ebf5ee;
+    border-radius: 6px;
+    margin: 1rem;
+    padding: 0.5rem;
+    text-align: left;
+  }
+  .card p {
+    padding: 0.1rem;
+  }
+
+  .card img {
+    padding-right: 0.33rem;
+    width: 26px;
+  }
+
+  .card-title {
+    display: flex;
+    padding: 0.25rem 0;
+  }
+
+  .coin-name {
+    font-size: 1.15rem;
+  }
 `;
 
 const StyledTable = styled.table`
@@ -31,10 +65,16 @@ const StyledTable = styled.table`
   .loss {
     color: #ba2d13;
   }
+
+  img {
+    margin-right: 0.25rem;
+    width: 14px;
+  }
 `;
 
 function Dashboard(props) {
   const [username, setUsername] = useState("");
+  const { height, width } = useWindowDimensions();
   const [data, setData] = useState({
     coins: [],
     totalPL: 0,
@@ -47,7 +87,7 @@ function Dashboard(props) {
     } else {
       const currentUser = JSON.parse(userLoggedIn);
       setUsername(currentUser["username"]);
-      fetch("https://exchangetracker.net/api/get-dashboard", {
+      fetch("http://localhost:5000/api/get-dashboard", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -57,6 +97,7 @@ function Dashboard(props) {
         .then((res) => res.json())
         .then((res) => {
           setData(res);
+          console.log(res);
         });
     }
   }, []);
@@ -66,38 +107,73 @@ function Dashboard(props) {
       <Header />
       <StyledDashboard>
         <p>{username}'s Dashboard</p>
-        <StyledTable>
-          <tr>
-            <th>Coin Name</th>
-            <th>Exchange</th>
-            <th>Quantity</th>
-            <th>Average Price</th>
-            <th>Current Price</th>
-            <th>P & L</th>
-          </tr>
-          {data.coins.map((coin) => (
-            <tr key={coin.coinID}>
-              <td>{coin.coinName}</td>
-              <td>{coin.exchange}</td>
-              <td>{coin.quantity}</td>
-              <td>{coin.averagePrice}</td>
-              <td>{coin.currentPrice}</td>
-              {coin.pAndL > 0 ? (
-                <td className="profit">{coin.pAndL}</td>
+        {width > 768 ? (
+          <StyledTable>
+            <tr>
+              <th>Coin Name</th>
+              <th>Exchange</th>
+              <th>Quantity</th>
+              <th>Average Price</th>
+              <th>Current Price</th>
+              <th>P & L</th>
+            </tr>
+            {data.coins.map((coin) => (
+              <tr key={coin.coinID}>
+                <td><img src={coin.image[0].imageLink} alt={coin.coinID}/>{coin.coinName}</td>
+                <td>{coin.exchange}</td>
+                <td>{coin.quantity}</td>
+                <td>{coin.averagePrice}</td>
+                <td>{coin.currentPrice}</td>
+                {coin.pAndL > 0 ? (
+                  <td className="profit">{coin.pAndL}</td>
+                ) : (
+                  <td className="loss">{coin.pAndL}</td>
+                )}
+              </tr>
+            ))}
+            <tr>
+              <td colSpan="5">Total P & L:</td>
+              {data.totalPL > 0 ? (
+                <td className="profit">{data.totalPL}</td>
               ) : (
-                <td className="loss">{coin.pAndL}</td>
+                <td className="loss">{data.totalPL}</td>
               )}
             </tr>
-          ))}
-          <tr>
-            <td colSpan="5">Total P & L:</td>
+          </StyledTable>
+        ) : (
+          <div className="container">
+            {data.coins.map((coin) => (
+              <div key={coin.coinID} className="card">
+                <div className="card-title">
+                  <img src={coin.image[0].imageLink} alt={coin.coinID}/>
+                  <p className="coin-name">{coin.coinName}</p>
+                </div>
+                <p>Exchange: {coin.exchange}</p>
+                <p>Quantity: {coin.quantity}</p>
+                <p>Average Price: ${coin.averagePrice}</p>
+                <p>Current Price: ${coin.currentPrice}</p>
+                {coin.pAndL > 0 ? (
+                  <p>
+                    P & L: <span className="profit">${coin.pAndL}</span>
+                  </p>
+                ) : (
+                  <p>
+                    P & L: <span className="loss">${coin.pAndL}</span>
+                  </p>
+                )}
+              </div>
+            ))}
             {data.totalPL > 0 ? (
-              <td className="profit">{data.totalPL}</td>
+              <p>
+                Total P&L: <span className="profit">${data.totalPL}</span>
+              </p>
             ) : (
-              <td className="loss">{data.totalPL}</td>
+              <p>
+                Total P&L: <span className="loss">${data.totalPL}</span>
+              </p>
             )}
-          </tr>
-        </StyledTable>
+          </div>
+        )}
       </StyledDashboard>
       <Footer />
     </div>
