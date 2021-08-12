@@ -24,9 +24,9 @@ const StyledForm = styled.form`
   margin: 1rem 20%;
 
   button {
-    background: #78a1bb;
+    background: #bfa89e;
     border-radius: 6px;
-    color: #283044;
+    color: #fff;
     padding: 0.5rem;
     text-align: center;
   }
@@ -155,7 +155,7 @@ function Entry(props) {
   return (
     <div className="entry-wrapper">
       <Helmet>
-	  <title>New Entry</title>
+        <title>New Entry</title>
       </Helmet>
       <Header />
       <StyledEntry>

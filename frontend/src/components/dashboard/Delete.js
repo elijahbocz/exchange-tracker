@@ -9,9 +9,25 @@ import Footer from "../Footer";
 const StyledDelete = styled.div`
   padding: 1rem;
   text-align: center;
+
+  .error {
+    color: #ba2d13;
+  }
 `;
 
-const StyledForm = styled.form``;
+const StyledForm = styled.form`
+  button {
+    background: #bfa89e;
+    border-radius: 6px;
+    color: #fff;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  button:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+`;
 
 const StyledTable = styled.table`
   background: #ebf5ee;
@@ -38,19 +54,20 @@ const StyledTable = styled.table`
 
   .rowToBeDeleted {
     border: none;
-    background: #ba2d13;
-    
+    background: #c49991;
+    color: #fff;
   }
 `;
 
 function Delete(props) {
   const [username, setUsername] = useState("");
   const rowRefs = useRef([]);
+  const [toDelete, setToDelete] = useState([]);
+  const [error, setError] = useState("");
   const [data, setData] = useState({
     coins: [],
     totalPL: 0,
   });
-  const [toDelete, setToDelete] = useState([]);
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -73,11 +90,31 @@ function Delete(props) {
     }
   }, []);
 
-  function handleSubmit() {
-    
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(toDelete);
+    if (toDelete.length === 0) {
+      setError("No coins selected, nothing was deleted")
+    } else {
+      const submission = {
+        toDelete: toDelete
+      };
+      fetch("http://127.0.0.1:5000/api/delete-coin", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(submission),
+      })
+        .then((res) => res.json())
+        .then(() => {
+          props.history.push("/dashboard");
+        });
+    }
   }
 
-  const handleChange = i => e => {
+  // handles
+  const handleChange = (i) => (e) => {
     const eTar = e.target;
     if (!toDelete.includes(eTar.value)) {
       let newToDelete = [...toDelete];
@@ -85,15 +122,16 @@ function Delete(props) {
       setToDelete(newToDelete);
       toggleDeleteDisplay(e);
     } else {
-      let newToDelete = toDelete.filter(el => el != eTar.value);
+      let newToDelete = toDelete.filter((el) => el != eTar.value);
       setToDelete(newToDelete);
       toggleDeleteDisplay(e);
     }
-  }
+  };
 
   function toggleDeleteDisplay(e) {
-    const rowToBeDeleted = rowRefs.current.find(el => el.id === e.target.value);
-    console.log(rowToBeDeleted);
+    const rowToBeDeleted = rowRefs.current.find(
+      (el) => el.id === e.target.value
+    );
     if (!toDelete.includes(rowToBeDeleted.id)) {
       rowToBeDeleted.className = "rowToBeDeleted";
     } else {
@@ -109,6 +147,7 @@ function Delete(props) {
       <Header />
       <StyledDelete>
         <p>Select the coins to delete:</p>
+        <p className="error">{error}</p>
         <StyledForm onSubmit={handleSubmit}>
           <StyledTable>
             <tr>
@@ -119,12 +158,22 @@ function Delete(props) {
               <th>Delete</th>
             </tr>
             {data.coins.map((coin, i) => (
-              <tr key={coin.coinID + coin.quantity} id={coin.coinID} ref={(el) => (rowRefs.current[i] = el)}>
+              <tr
+                key={coin.coinID + coin.quantity}
+                id={coin.coinID}
+                ref={(el) => (rowRefs.current[i] = el)}
+              >
                 <td>{coin.coinName}</td>
                 <td>{coin.exchange}</td>
                 <td>{coin.quantity}</td>
                 <td>{coin.averagePrice}</td>
-                <td><input type="checkbox" value={coin.coinID} onChange={handleChange(i)}></input></td>
+                <td>
+                  <input
+                    type="checkbox"
+                    value={coin.coinID}
+                    onChange={handleChange(i)}
+                  ></input>
+                </td>
               </tr>
             ))}
           </StyledTable>
