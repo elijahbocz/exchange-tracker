@@ -13,6 +13,27 @@ const StyledHomeContent = styled.div`
 const StyledHomeText = styled.div`
   margin: 1rem;
   padding: 1rem;
+  // up to 1200px
+  @media screen and (max-width: 1199.98px) {
+  }
+
+  // up to 992px
+  @media screen and (max-width: 991.98px) {
+    p {
+      padding: 0.2rem;
+    }
+  }
+
+  // up to 768px
+  @media screen and (max-width: 767.98px) {
+    p {
+      padding: 0.3rem;
+    }
+  }
+
+  // up to 576px
+  @media screen and (max-width: 575.98px) {
+  }
 `;
 
 const StyledLink = styled(Link)`
