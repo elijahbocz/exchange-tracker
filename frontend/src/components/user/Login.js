@@ -17,15 +17,15 @@ const StyledLogin = styled.div`
 
 const StyledForm = styled.form`
   button {
-    background: #78A1BB;
+    background: #bfa89e;
     border-radius: 6px;
-    color: #283044;
+    color: #fff;
     padding: 0.5rem;
     text-align: center;
   }
   button:hover {
     cursor: pointer;
-    opacity: .9;
+    opacity: 0.9;
   }
 `;
 
@@ -90,7 +90,7 @@ function Login(props) {
   return (
     <div className="home">
       <Helmet>
-	  <title>Login</title>
+        <title>Login</title>
       </Helmet>
       <Header />
       <StyledLogin>

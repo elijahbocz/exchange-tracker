@@ -8,7 +8,6 @@ import Footer from "./Footer";
 
 const StyledHomeContent = styled.div`
   text-align: center;
-
 `;
 
 const StyledHomeText = styled.div`
@@ -20,7 +19,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 
   button {
-    background: #78A1BB;
+    background: #78a1bb;
     border: none;
     border-radius: 6px;
     color: #fff;
@@ -38,7 +37,7 @@ function Home() {
   return (
     <div className="home">
       <Helmet>
-	  <title>Home</title>
+        <title>Home</title>
       </Helmet>
       <Header />
       <StyledHomeContent>

@@ -19,11 +19,13 @@ def add_new_coin(coin_id, user_id, coin_name, coin_symbol, exchange, quantity, a
     connection = create_connection()
     with connection.cursor() as cursor:
         now = str(datetime.now())
-        sql = "INSERT INTO `coins` (`coinID`, `userID`, `coinName`, `coinSymbol`, `exchange`, `quantity`, `averagePrice`, `dateAdded`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO `coins` (`coinSimpleID`, `userID`, `coinName`, `coinSymbol`, `exchange`, `quantity`, `averagePrice`, `dateAdded`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        print(sql)
         cursor.execute(sql, (coin_id, user_id, coin_name, coin_symbol, exchange, quantity, avg_price, now))
 
     # connection is not autocommit by default
     connection.commit()
+
 
 
 def get_user_coins(user_id):
@@ -32,3 +34,15 @@ def get_user_coins(user_id):
         sql = "SELECT * FROM `coins` WHERE `userID`=%s"
         cursor.execute(sql, (user_id))
         return cursor.fetchall()
+
+
+def delete_existing_coin(coin_id):
+    connection = create_connection()
+    with connection.cursor() as cursor:
+        now = str(datetime.now())
+        sql = "DELETE FROM `coins` WHERE `coinID`=%s"
+        print(sql)
+        cursor.execute(sql, (coin_id))
+
+    # connection is not autocommit by default
+    connection.commit()

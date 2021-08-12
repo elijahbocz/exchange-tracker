@@ -1,6 +1,6 @@
 from db.login_user import login
 from db.register_user import registration, valid_username
-from db.coin import add_new_coin, get_user_coins
+from db.coin import add_new_coin, delete_existing_coin, get_user_coins, delete_existing_coin
 from db.coins_list import fetch_coins_list
 from db.exchanges import fetch_exchanges_names
 from external.simple import get_simple_price
@@ -34,6 +34,54 @@ def login_user():
         return {"error": 1}
         
 
+@app.route('/api/get-dashboard', methods=['POST'])
+def get_dashboard():
+    if request.method == 'POST':
+        # Get the json request
+        req = request.json
+        user_id = req['userID']
+
+        # get coins with associated user ID
+        coins = get_user_coins(user_id)
+        print(coins)
+        
+        # parse the user's coins and pick out the simple ids
+        # these ids will be used for getting the current price data
+        coin_ids = []
+        for coin in coins:
+            # coinSimpleId will be bitcoin, ethereum
+            coin_ids.append(coin['coinSimpleID'])
+        # get the current prices from CoinGecko in usd
+        prices = get_simple_price(",".join(coin_ids), 'usd')
+        for key in prices.keys():
+            for coin in coins:
+                if (coin['coinSimpleID'] == key):
+                    coin['currentPrice'] = prices[key]['usd']
+        total_p_l = 0
+        for coin in coins:
+            quantity = float(coin['quantity'])
+            avg_price = float(coin['averagePrice'])
+            cur_price = float(coin['currentPrice'])
+            p_and_l = round((cur_price * quantity) - (avg_price * quantity), 6)
+            total_p_l += p_and_l
+            coin['pAndL'] = p_and_l
+        dashboard = {}
+        dashboard['coins'] = coins
+        dashboard['totalPL'] = round(total_p_l, 6)
+        return(jsonify(dashboard))
+    return request.json
+
+
+@app.route('/api/get-lists')
+def get_lists():
+    coins = fetch_coins_list()
+    exchanges = fetch_exchanges_names()
+    lists = {}
+    lists['coins'] = coins
+    lists['exchanges'] = exchanges
+    return jsonify(lists)
+
+
 @app.route('/api/new-coin', methods=['POST'])
 def new_coin():
     if request.method == 'POST':
@@ -49,42 +97,14 @@ def new_coin():
     return request.json
 
 
-@app.route('/api/get-lists')
-def get_lists():
-    coins = fetch_coins_list()
-    exchanges = fetch_exchanges_names()
-    lists = {}
-    lists['coins'] = coins
-    lists['exchanges'] = exchanges
-    return jsonify(lists)
-
-
-@app.route('/api/get-dashboard', methods=['POST'])
-def get_dashboard():
+@app.route('/api/delete-coin', methods=['POST'])
+def delete_coin():
     if request.method == 'POST':
         req = request.json
-        user_id = req['userID']
-        coins = get_user_coins(user_id)
-        coin_ids = []
-        for coin in coins:
-            coin_ids.append(coin['coinID'])
-        prices = get_simple_price(",".join(coin_ids), 'usd')
-        for key in prices.keys():
-            for coin in coins:
-                if (coin['coinID'] == key):
-                    coin['currentPrice'] = prices[key]['usd']
-        total_p_l = 0
-        for coin in coins:
-            quantity = float(coin['quantity'])
-            avg_price = float(coin['averagePrice'])
-            cur_price = float(coin['currentPrice'])
-            p_and_l = round((cur_price * quantity) - (avg_price * quantity), 6)
-            total_p_l += p_and_l
-            coin['pAndL'] = p_and_l
-        dashboard = {}
-        dashboard['coins'] = coins
-        dashboard['totalPL'] = round(total_p_l, 6)
-        print(dashboard)
-        return(jsonify(dashboard))
+        coins_to_delete = []
+        for coin_id in req['toDelete']:
+            if coin_id is not None:
+                coins_to_delete.append(coin_id)
+        for coin_id in coins_to_delete:
+            delete_existing_coin(coin_id)
     return request.json
-

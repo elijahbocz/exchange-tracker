@@ -17,9 +17,9 @@ const StyledRegistration = styled.div`
 
 const StyledForm = styled.form`
   button {
-    background: #78a1bb;
+    background: #bfa89e;
     border-radius: 6px;
-    color: #283044;
+    color: #fff;
     padding: 0.5rem;
     text-align: center;
   }
@@ -97,7 +97,7 @@ function Register(props) {
   return (
     <div className="home">
       <Helmet>
-	  <title>Register</title>
+        <title>Register</title>
       </Helmet>
       <Header />
       <StyledRegistration>

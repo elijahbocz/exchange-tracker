@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import styled from "styled-components";
-import { Helmet } from "react-helmet";
 
 import Header from "../Header";
 import Footer from "../Footer";
@@ -26,11 +25,11 @@ const StyledTable = styled.table`
   }
 
   .profit {
-    color: #00CE2A;
+    color: #00ce2a;
   }
 
   .loss {
-    color: #BA2D13;
+    color: #ba2d13;
   }
 `;
 
@@ -48,7 +47,7 @@ function Dashboard(props) {
     } else {
       const currentUser = JSON.parse(userLoggedIn);
       setUsername(currentUser["username"]);
-      fetch("http://165.22.183.86/api/get-dashboard", {
+      fetch("http://127.0.0.1:5000/api/get-dashboard", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -57,7 +56,6 @@ function Dashboard(props) {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           setData(res);
         });
     }
@@ -65,14 +63,10 @@ function Dashboard(props) {
 
   return (
     <div className="dashboard-wrapper">
-      <Helmet>
-	  <title>Dashboard</title>
-      </Helmet>
       <Header />
       <StyledDashboard>
         <p>{username}'s Dashboard</p>
         <StyledTable>
-          <p></p>
           <tr>
             <th>Coin Name</th>
             <th>Exchange</th>
@@ -98,10 +92,10 @@ function Dashboard(props) {
           <tr>
             <td colSpan="5">Total P & L:</td>
             {data.totalPL > 0 ? (
-                <td className="profit">{data.totalPL}</td>
-              ) : (
-                <td className="loss">{data.totalPL}</td>
-              )}
+              <td className="profit">{data.totalPL}</td>
+            ) : (
+              <td className="loss">{data.totalPL}</td>
+            )}
           </tr>
         </StyledTable>
       </StyledDashboard>

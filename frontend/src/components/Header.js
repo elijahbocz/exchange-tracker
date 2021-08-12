@@ -65,6 +65,9 @@ function Header(props) {
           <StyledLink className="app-link" to="/dashboard-entry">
             New Coin
           </StyledLink>
+          <StyledLink className="app-link" to="dashboard-delete">
+            Delete Coin
+          </StyledLink>
           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </StyledUserNav>
       ) : (

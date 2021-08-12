@@ -8,6 +8,7 @@ import SuccessfulRegistration from "./components/user/SuccessfulRegistration";
 
 import Dashboard from "./components/dashboard/Dashboard";
 import Entry from "./components/dashboard/Entry";
+import Delete from "./components/dashboard/Delete";
 
 import Contents from "./components/documentation/Contents";
 import Backend from "./components/documentation/Backend";
@@ -36,6 +37,9 @@ function App() {
             </Route>
             <Route path="/dashboard-entry">
               <Entry />
+            </Route>
+            <Route path="/dashboard-delete">
+              <Delete />
             </Route>
             <Route path="/documentation/contents">
               <Contents />
