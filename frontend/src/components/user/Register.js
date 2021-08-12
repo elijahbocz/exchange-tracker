@@ -55,7 +55,7 @@ function Register(props) {
     e.preventDefault();
     if (password === confirmPassword) {
       const credentials = { username: username, password: password };
-      fetch("http://exchangetracker.net/api/register-user", {
+      fetch("https://exchangetracker.net/api/register-user", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

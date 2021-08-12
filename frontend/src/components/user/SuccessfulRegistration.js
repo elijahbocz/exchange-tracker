@@ -60,7 +60,7 @@ function Login(props) {
   function handleLogin(e) {
     e.preventDefault();
     const credentials = { username: username, password: password };
-    fetch("http://exchangetracker.net/api/login-user", {
+    fetch("https://exchangetracker.net/api/login-user", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
