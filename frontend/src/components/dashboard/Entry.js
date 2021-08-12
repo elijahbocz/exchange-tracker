@@ -16,6 +16,7 @@ const StyledEntry = styled.div`
   .error {
     color: red;
   }
+  
 `;
 
 const StyledForm = styled.form`
@@ -34,6 +35,12 @@ const StyledForm = styled.form`
     cursor: pointer;
     opacity: 0.9;
   }
+
+  // up to 768px
+  @media screen and (max-width: 767.98px) {
+    padding: 0.5rem;
+    margin: 1rem 5%;
+  }
 `;
 
 const StyledInputGroup = styled.div`
@@ -48,7 +55,7 @@ const StyledInputGroup = styled.div`
   input {
     background: #fff;
     padding: 0.5rem 0 0.5rem 0.5rem;
-    width: 100%;
+    width: 97%;
   }
 `;
 

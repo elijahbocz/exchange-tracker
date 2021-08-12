@@ -177,6 +177,26 @@ function Delete(props) {
               </tr>
             ))}
           </StyledTable>
+          {data.coins.map((coin, i) => (
+              <p
+                key={coin.coinID + coin.quantity}
+                id={coin.coinID}
+                ref={(el) => (rowRefs.current[i] = el)}
+              >
+                <p>{coin.coinName}</p>
+                <p>{coin.exchange}</p>
+                <p>{coin.quantity}</p>
+                <p>{coin.averagePrice}</p>
+                <p>
+                  <input
+                    type="checkbox"
+                    value={coin.coinID}
+                    onChange={handleChange(i)}
+                  ></input>
+                </p>
+              </p>
+            ))}
+
           <button>Submit</button>
         </StyledForm>
       </StyledDelete>
