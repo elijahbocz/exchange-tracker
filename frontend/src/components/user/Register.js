@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
 import Header from "../Header";
 
@@ -54,7 +55,7 @@ function Register(props) {
     e.preventDefault();
     if (password === confirmPassword) {
       const credentials = { username: username, password: password };
-      fetch("http://127.0.0.1:5000/api/register-user", {
+      fetch("http://exchangetracker.net/api/register-user", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -95,6 +96,9 @@ function Register(props) {
 
   return (
     <div className="home">
+      <Helmet>
+	  <title>Register</title>
+      </Helmet>
       <Header />
       <StyledRegistration>
         <p className="error">{error}</p>

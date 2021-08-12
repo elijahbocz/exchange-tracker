@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
 import Header from "../Header";
 import Footer from "../Footer";
@@ -68,7 +69,7 @@ function Entry(props) {
     } else {
       const parsedUser = JSON.parse(userLoggedIn);
       setUserID(parsedUser.userID);
-      fetch("http://127.0.0.1:5000/api/get-lists", {
+      fetch("http://165.22.183.86/api/get-lists", {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -124,7 +125,7 @@ function Entry(props) {
         quantity: quantity,
         averagePrice: averagePrice,
       };
-      fetch("http://127.0.0.1:5000/api/new-coin", {
+      fetch("http://165.22.183.86/api/new-coin", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -152,6 +153,9 @@ function Entry(props) {
 
   return (
     <div className="entry-wrapper">
+      <Helmet>
+	  <title>New Entry</title>
+      </Helmet>
       <Header />
       <StyledEntry>
         <p>New Coin</p>

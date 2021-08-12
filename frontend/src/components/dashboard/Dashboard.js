@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
 import Header from "../Header";
 import Footer from "../Footer";
@@ -47,7 +48,7 @@ function Dashboard(props) {
     } else {
       const currentUser = JSON.parse(userLoggedIn);
       setUsername(currentUser["username"]);
-      fetch("http://127.0.0.1:5000/api/get-dashboard", {
+      fetch("http://165.22.183.86/api/get-dashboard", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -64,6 +65,9 @@ function Dashboard(props) {
 
   return (
     <div className="dashboard-wrapper">
+      <Helmet>
+	  <title>Dashboard</title>
+      </Helmet>
       <Header />
       <StyledDashboard>
         <p>{username}'s Dashboard</p>

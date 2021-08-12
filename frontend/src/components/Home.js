@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -36,6 +37,9 @@ const StyledLink = styled(Link)`
 function Home() {
   return (
     <div className="home">
+      <Helmet>
+	  <title>Home</title>
+      </Helmet>
       <Header />
       <StyledHomeContent>
         <StyledHomeText>

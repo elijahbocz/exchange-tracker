@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
 import Header from "../Header";
 
@@ -59,7 +60,7 @@ function Login(props) {
   function handleLogin(e) {
     e.preventDefault();
     const credentials = { username: username, password: password };
-    fetch("http://127.0.0.1:5000/api/login-user", {
+    fetch("http://165.22.183.86/api/login-user", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -88,6 +89,9 @@ function Login(props) {
 
   return (
     <div className="home">
+      <Helmet>
+	  <title>Successful Registration</title>
+      </Helmet>
       <Header />
       <StyledLogin>
         <p className="error">{error}</p>
