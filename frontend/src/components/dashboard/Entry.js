@@ -125,7 +125,7 @@ function Entry(props) {
         quantity: quantity,
         averagePrice: averagePrice,
       };
-      fetch("http://127.0.0.1:5000/api/new-coin", {
+      fetch("http://exchangetracker.net/api/new-coin", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

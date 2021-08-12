@@ -76,7 +76,7 @@ function Delete(props) {
     } else {
       const currentUser = JSON.parse(userLoggedIn);
       setUsername(currentUser["username"]);
-      fetch("http://127.0.0.1:5000/api/get-dashboard", {
+      fetch("http://exchangetracker.net/api/get-dashboard", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
