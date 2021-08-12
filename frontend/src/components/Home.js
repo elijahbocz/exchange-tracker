@@ -40,7 +40,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 
   button {
-    background: #78a1bb;
+    background: #bfa89e;
     border: none;
     border-radius: 6px;
     color: #fff;
