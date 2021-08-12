@@ -20,12 +20,23 @@ const StyledDashboard = styled.div`
 
   .card {
     background: #ebf5ee;
+    border-radius: 6px;
     margin: 1rem;
     padding: 0.5rem;
     text-align: left;
   }
   .card p {
     padding: 0.1rem;
+  }
+
+  .card img {
+    padding-right: 0.33rem;
+    width: 26px;
+  }
+
+  .card-title {
+    display: flex;
+    padding: 0.25rem 0;
   }
 
   .coin-name {
@@ -54,6 +65,11 @@ const StyledTable = styled.table`
   .loss {
     color: #ba2d13;
   }
+
+  img {
+    margin-right: 0.25rem;
+    width: 14px;
+  }
 `;
 
 function Dashboard(props) {
@@ -71,7 +87,7 @@ function Dashboard(props) {
     } else {
       const currentUser = JSON.parse(userLoggedIn);
       setUsername(currentUser["username"]);
-      fetch("https://exchangetracker.net/api/get-dashboard", {
+      fetch("http://localhost:5000/api/get-dashboard", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -81,6 +97,7 @@ function Dashboard(props) {
         .then((res) => res.json())
         .then((res) => {
           setData(res);
+          console.log(res);
         });
     }
   }, []);
@@ -102,7 +119,7 @@ function Dashboard(props) {
             </tr>
             {data.coins.map((coin) => (
               <tr key={coin.coinID}>
-                <td>{coin.coinName}</td>
+                <td><img src={coin.image[0].imageLink} alt={coin.coinID}/>{coin.coinName}</td>
                 <td>{coin.exchange}</td>
                 <td>{coin.quantity}</td>
                 <td>{coin.averagePrice}</td>
@@ -127,29 +144,32 @@ function Dashboard(props) {
           <div className="container">
             {data.coins.map((coin) => (
               <div key={coin.coinID} className="card">
-                <p className="coin-name">{coin.coinName}</p>
+                <div className="card-title">
+                  <img src={coin.image[0].imageLink} alt={coin.coinID}/>
+                  <p className="coin-name">{coin.coinName}</p>
+                </div>
                 <p>Exchange: {coin.exchange}</p>
                 <p>Quantity: {coin.quantity}</p>
-                <p>Average Price: {coin.averagePrice}</p>
-                <p>Current Price: {coin.currentPrice}</p>
+                <p>Average Price: ${coin.averagePrice}</p>
+                <p>Current Price: ${coin.currentPrice}</p>
                 {coin.pAndL > 0 ? (
                   <p>
-                    P & L: <span className="profit">{coin.pAndL}</span>
+                    P & L: <span className="profit">${coin.pAndL}</span>
                   </p>
                 ) : (
                   <p>
-                    P & L: <span className="loss">{coin.pAndL}</span>
+                    P & L: <span className="loss">${coin.pAndL}</span>
                   </p>
                 )}
               </div>
             ))}
             {data.totalPL > 0 ? (
               <p>
-                Total P&L: <span className="profit">{data.totalPL}</span>
+                Total P&L: <span className="profit">${data.totalPL}</span>
               </p>
             ) : (
               <p>
-                Total P&L: <span className="loss">{data.totalPL}</span>
+                Total P&L: <span className="loss">${data.totalPL}</span>
               </p>
             )}
           </div>

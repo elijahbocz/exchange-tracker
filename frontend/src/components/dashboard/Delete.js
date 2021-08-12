@@ -17,6 +17,7 @@ const StyledDelete = styled.div`
 
   .rowNotToBeDeleted {
     background: #ebf5ee;
+    border-radius: 6px;
     margin: 1rem;
     padding: 0.5rem;
   }
@@ -27,6 +28,7 @@ const StyledDelete = styled.div`
 
   .rowToBeDeleted {
     background: #c49991;
+    border-radius: 6px;
     color: #fff;
     margin: 1rem;
     padding: 0.5rem;
