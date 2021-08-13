@@ -68,7 +68,7 @@ function Entry(props) {
   const [error, setError] = useState("");
   const [coins, setCoins] = useState([]);
   const [validExchanges, setValidExchanges] = useState([]);
-  const otherValidExchanges = ["paypal", "coinbase", "robin hood", "robinhood"];
+  // const otherValidExchanges = ["paypal", "coinbase", "robin hood", "robinhood"];
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -108,11 +108,11 @@ function Entry(props) {
       (validExchange) =>
         validExchange.exchangeName.toLowerCase() === exchange.toLowerCase()
     );
-    if (foundExchange === undefined) {
-      foundExchange = otherValidExchanges.find((otherValidExchange) =>
-        otherValidExchange === exchange.toLowerCase()
-      );
-    }
+    // if (foundExchange === undefined) {
+    //   foundExchange = otherValidExchanges.find((otherValidExchange) =>
+    //     otherValidExchange === exchange.toLowerCase()
+    //   );
+    // }
 
     if (
       coinSymbol === "" ||
