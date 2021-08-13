@@ -1,4 +1,4 @@
-The Coin Exchange Tracker allows you to view all of their crypto purchases in one place.
+The [Coin Exchange Tracker](https://exchangetracker.net) allows you to view all of their crypto purchases in one place.
 
 With no real connections to any exchange, the data you put into your account will pose no risk to your holdings.
 
