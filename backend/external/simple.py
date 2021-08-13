@@ -1,6 +1,6 @@
 import requests
 
-
+# function for fetching the price of coins, using the coin id and currency
 def get_simple_price(ids, vs_currencies):
     params = {
         "ids": ids,

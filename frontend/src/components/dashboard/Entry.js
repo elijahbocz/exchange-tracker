@@ -74,15 +74,19 @@ function Entry(props) {
     if (!userLoggedIn) {
       props.history.push("/login");
     } else {
+      // the user ID is needed in the POST request
       const parsedUser = JSON.parse(userLoggedIn);
       setUserID(parsedUser.userID);
 
+      // determine the environment and use appropriate url for fetch
       let url = "";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:5000/api/get-lists";
       } else {
         url = "https://exchangetracker.net/api/get-lists";
       }
+
+      // fetches the list of available coins and exchanges to be check against in the form
       fetch(url, {
         method: "GET",
         headers: {
@@ -97,6 +101,7 @@ function Entry(props) {
     }
   }, []);
 
+  // function used to ensure the values in the average price and quantity are numeric
   function isNumeric(input) {
     if (typeof input != "string") {
       return false;
@@ -106,10 +111,15 @@ function Entry(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    // checks the user input coin name against the valid list of coin names
+    // if the user input is valid, the valid coin name will be stored and used
     const foundCoin = coins.find(
       (coin) =>
         coin.coinSymbol === coinSymbol && !coin.coinName.includes("Binance")
     );
+
+    // similar process of validating the user input exchange
     let foundExchange = validExchanges.find(
       (validExchange) =>
         validExchange.exchangeName.toLowerCase() === exchange.toLowerCase()
@@ -120,6 +130,7 @@ function Entry(props) {
     //   );
     // }
 
+    // validate the fields are not empty
     if (
       coinSymbol === "" ||
       exchange === "" ||
@@ -127,15 +138,27 @@ function Entry(props) {
       averagePrice === ""
     ) {
       setError("Fields can not be empty");
-    } else if (foundCoin === undefined) {
+    }
+    // validate the coin name is valid,
+    // undefined means the coin is not found in list of valid coin names
+    else if (foundCoin === undefined) {
       setError("Invalid Coin Symbol");
-    } else if (foundExchange === undefined) {
+    }
+    // similiar validation as above on exchange name
+    else if (foundExchange === undefined) {
       setError("Invalid Exchange Name");
-    } else if (!isNumeric(quantity) || !isNumeric(averagePrice)) {
+    } 
+    // validate the quantity and average price input are valid
+    else if (!isNumeric(quantity) || !isNumeric(averagePrice)) {
       setError("Quantity and Average Price must be valid numbers");
-    } else if (parseFloat(quantity) < 0 || parseFloat(averagePrice) < 0) {
+    } 
+    // validate the quantity and average price are not negative numbers
+    else if (parseFloat(quantity) < 0 || parseFloat(averagePrice) < 0) {
       setError("Quantity and Average Price can not be negative");
-    } else {
+    } 
+    // otherwise, inputs are valid
+    else {
+      // create the submission object to be sent in the POST request
       const submission = {
         coinID: foundCoin.coinID,
         userID: userID,
@@ -145,12 +168,16 @@ function Entry(props) {
         quantity: quantity,
         averagePrice: averagePrice,
       };
+
+      // determine the environment and use appropriate url for fetch
       let url = "";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:5000/api/new-coin";
       } else {
         url = "https://exchangetracker.net/api/new-coin";
       }
+
+      // send the POST request to create a new entry in the database
       fetch(url, {
         method: "POST",
         headers: {
@@ -160,7 +187,7 @@ function Entry(props) {
       })
         .then((res) => res.json())
         .then(() => {
-          console.log("TESTSTSTSTS");
+          // redirect to dashboard
           props.history.push("/dashboard");
         });
     }

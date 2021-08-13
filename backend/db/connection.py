@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# function used for creating a connection the MySQL database
 def create_connection():
     return pymysql.connect(
     host=os.environ.get("DB_HOST"), 

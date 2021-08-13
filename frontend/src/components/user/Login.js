@@ -57,21 +57,28 @@ function Login(props) {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // checks after initial render if a user is in local storage
     const userLoggedIn = localStorage.getItem("user");
     if (userLoggedIn) {
+      // if the user is found in local storage, redirect to dashboard
       props.history.push("/dashboard");
     }
   }, []);
 
   function handleLogin(e) {
     e.preventDefault();
+
+    // store user input into an object to send in POST request
     const credentials = { username: username, password: password };
+
+    // determine the environment and use appropriate url for fetch
     let url = "";
     if (process.env.NODE_ENV === "development") {
       url = "http://localhost:5000/api/login-user";
     } else {
       url = "https://exchangetracker.net/api/login-user"
     }
+
     fetch(url, {
       method: "POST",
       headers: {
@@ -83,9 +90,12 @@ function Login(props) {
       .then((res) => {
         console.log(res);
         if ("error" in res) {
+          // if the API returns an error, the credentials were incorrect
           setError("Invalid login credentials, try again");
         } else {
+          // store the user's ID (from our backend) in the local storage with the key 'user'
           localStorage.setItem("user", JSON.stringify(res));
+          // redirect to dashboard
           props.history.push("/dashboard");
         }
       });

@@ -85,18 +85,24 @@ function Dashboard(props) {
   });
 
   useEffect(() => {
+    // check if user is logged in, if no user is found then redirect to login page
     const userLoggedIn = localStorage.getItem("user");
     if (!userLoggedIn) {
       props.history.push("/login");
     } else {
+      // otherwise get the current user from local storage and retrieve the userID
       const currentUser = JSON.parse(userLoggedIn);
       setUsername(currentUser["username"]);
+
+      // determine the environment and use appropriate url for fetch
       let url = "";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:5000/api/get-dashboard";
       } else {
         url = "https://exchangetracker.net/api/get-dashboard";
       }
+
+      // retrieves all of the data to be displayd on the dashboard
       fetch(url, {
         method: "POST",
         headers: {
@@ -107,7 +113,6 @@ function Dashboard(props) {
         .then((res) => res.json())
         .then((res) => {
           setData(res);
-          console.log(res);
         });
     }
   }, []);

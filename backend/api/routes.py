@@ -9,31 +9,42 @@ from flask import json, request, jsonify
 from api import app
 
 
+# Route for user registration
 @app.route('/api/register-user', methods=['POST'])
 def register_user():
     if request.method == 'POST':
         req = request.json
         username = req['username']
         password= req['password']
+        # check if the username is taken already
         if valid_username(username):
             registration(username, password)
+            # 0 success means user was successfully created
             return {"success": 0}
+        # 1 error indicates the username is taken
         return {"error": 1}
         
 
+# Route for user login
 @app.route('/api/login-user', methods=['POST'])
 def login_user():
     if request.method == 'POST':
         req = request.json
         username = req['username']
         password= req['password']
+        # attempt to log the user in
         login_res = login(username, password)
+        # if the username and password are correct
         if login_res['passwords_match'] == True:
+            # remove the tag that the passwords match
             login_res.pop('passwords_match', None)
+            # return user ID
             return login_res
+        # otherwise credentials are invalid, return error
         return {"error": 1}
         
 
+# Route for retrieving dashboard
 @app.route('/api/get-dashboard', methods=['POST'])
 def get_dashboard():
     if request.method == 'POST':
@@ -42,7 +53,6 @@ def get_dashboard():
 
         # get coins with associated user ID
         coins = get_user_coins(user_id)
-        print(coins)
         
         # parse the user's coins and pick out the simple ids
         # these ids will be used for getting the current price data
@@ -74,6 +84,7 @@ def get_dashboard():
 
             # fetch the image for the current coin
             coin['image'] = get_coin_image(coin['coinSimpleID'])
+        # create the dashboard object to be returned to frontend
         dashboard = {}
         dashboard['coins'] = coins
         dashboard['totalPL'] = round(total_p_l, 6)
@@ -81,6 +92,7 @@ def get_dashboard():
     return request.json
 
 
+# Route for retrieving the lists of valid coin names and exchange names
 @app.route('/api/get-lists')
 def get_lists():
     coins = fetch_coins_list()
@@ -91,10 +103,12 @@ def get_lists():
     return jsonify(lists)
 
 
+# Route for creating a new coin in the database associated with a user
 @app.route('/api/new-coin', methods=['POST'])
 def new_coin():
     if request.method == 'POST':
         req = request.json
+        # parse the object passed to the route
         coin_id = req['coinID']
         user_id = req['userID']
         coin_name = req['coinName']
@@ -106,14 +120,18 @@ def new_coin():
     return request.json
 
 
+# Route for deleting a coin in the database associated with user
 @app.route('/api/delete-coin', methods=['POST'])
 def delete_coin():
     if request.method == 'POST':
         req = request.json
         coins_to_delete = []
+        # parse the list of coin ids passed to the route
         for coin_id in req['toDelete']:
+            # ignore any null entries in the list
             if coin_id is not None:
                 coins_to_delete.append(coin_id)
         for coin_id in coins_to_delete:
+            # parse list and delete the existing coins
             delete_existing_coin(coin_id)
     return request.json

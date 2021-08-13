@@ -126,19 +126,25 @@ function Delete(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(toDelete);
+
+    // if nothing was selected to delete, nothing needs to be done
     if (toDelete.length === 0) {
       setError("No coins selected, nothing was deleted");
     } else {
+      // otherwise, create an object with the array of deleted items nested in it
       const submission = {
         toDelete: toDelete,
       };
+
+      // determine the environment and use appropriate url for fetch
       let url = "";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:5000/api/delete-coin";
       } else {
         url = "https://exchangetracker.net/api/delete-coin";
       }
+
+      // POST the coins to be deleted to the backend
       fetch(url, {
         method: "POST",
         headers: {
@@ -148,26 +154,36 @@ function Delete(props) {
       })
         .then((res) => res.json())
         .then(() => {
+          // redirect to the dashboard after sending request
           props.history.push("/dashboard");
         });
     }
   }
 
-  // handles
+  // handles change in the checkboxes, 
+  // i represents the index of the card rendered for coin data
   const handleChange = (i) => (e) => {
     const eTar = e.target;
+    // if the array of items to be deleted does not contain the
+    // checkboxes value (which is equal to the coin's ID),
+    // the array should be updated to include this value
     if (!toDelete.includes(eTar.value)) {
+      // create a new array to be set as the items to be deleted
       let newToDelete = [...toDelete];
-      newToDelete[i + 1] = eTar.value;
+      // NOTE: originally this was i + 1, but I don't think it's necessary...
+      newToDelete[i] = eTar.value;
       setToDelete(newToDelete);
       toggleDeleteDisplay(e);
     } else {
+      // otherwise, the item has been deselected, remove this item
+      // by filering the array for all values expect the target value
       let newToDelete = toDelete.filter((el) => el != eTar.value);
       setToDelete(newToDelete);
       toggleDeleteDisplay(e);
     }
   };
 
+  // function to add/subtract styled classes to items to be deleted
   function toggleDeleteDisplay(e) {
     const rowToBeDeleted = rowRefs.current.find(
       (el) => el.id === e.target.value

@@ -59,15 +59,18 @@ function Register(props) {
 
   function handleRegistration(e) {
     e.preventDefault();
+    
     if (password === confirmPassword) {
       const credentials = { username: username, password: password };
 
+      // determine the environment and use appropriate url for fetch
       let url = "";
       if (process.env.NODE_ENV === "development") {
         url = "http://localhost:5000/api/register-user";
       } else {
         url = "https://exchangetracker.net/api/register-user";
       }
+
       fetch(url, {
         method: "POST",
         headers: {
@@ -79,8 +82,10 @@ function Register(props) {
         .then((res) => {
           console.log(res);
           if ("error" in res) {
+            // 1 error from the backend means the username exists in database
             if (res["error"] === 1) {
               setError("Username is taken");
+              // error will disappear after 3 seconds
               setTimeout(() => {
                 setError("");
               }, 3000);
@@ -90,6 +95,8 @@ function Register(props) {
           }
         });
     } else {
+      // otherwise the two passwords aren't equal to each other,
+      // show this error to the user for 3 seconds
       setError("Passwords do not match");
       setTimeout(() => {
         setError("");
