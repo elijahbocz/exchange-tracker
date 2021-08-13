@@ -5,3 +5,7 @@ create table coins (coinID MEDIUMINT AUTO_INCREMENT, coinSimpleID VARCHAR(36), u
 create table coins_list (coinID VARCHAR(64), coinSymbol VARCHAR(64), coinName VARCHAR(64));
 
 create table exchanges_list (exchangeID VARCHAR(32), exchangeName VARCHAR(32));
+
+create table coins_images (coinID VARCHAR(36), imageLink VARCHAR(128));
+
+create table users_total_pl (userID VARCHAR(36), totalPL VARCHAR(32), dateAdded VARCHAR(32));
