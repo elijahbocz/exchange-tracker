@@ -26,7 +26,6 @@ def get_user_coins(user_id):
 def delete_existing_coin(coin_id):
     connection = create_connection()
     with connection.cursor() as cursor:
-        now = str(datetime.now())
         sql = "DELETE FROM `coins` WHERE `coinID`=%s"
         print(sql)
         cursor.execute(sql, (coin_id))
