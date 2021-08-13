@@ -127,7 +127,7 @@ function Delete(props) {
       const submission = {
         toDelete: toDelete,
       };
-      fetch("http://127.0.0.1:5000/api/delete-coin", {
+      fetch("https://exchangetracker.net/api/delete-coin", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

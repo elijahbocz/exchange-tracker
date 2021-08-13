@@ -76,7 +76,7 @@ function Entry(props) {
     } else {
       const parsedUser = JSON.parse(userLoggedIn);
       setUserID(parsedUser.userID);
-      fetch("http://localhost:5000/api/get-lists", {
+      fetch("https://exchangetracker.net/api/get-lists", {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -132,7 +132,7 @@ function Entry(props) {
         quantity: quantity,
         averagePrice: averagePrice,
       };
-      fetch("http://localhost:5000/api/new-coin", {
+      fetch("https://exchangetracker.net/api/new-coin", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
