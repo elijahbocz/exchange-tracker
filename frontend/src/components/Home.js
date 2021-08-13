@@ -64,7 +64,7 @@ function Home() {
       <StyledHomeContent>
         <StyledHomeText>
           <p>
-            The Coin Exchange Tracker allows you to view all of their crypto
+            The Coin Exchange Tracker allows you to view all of your crypto
             purchases in one place.
           </p>
           <p>
