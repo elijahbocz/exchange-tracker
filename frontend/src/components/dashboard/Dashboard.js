@@ -17,6 +17,10 @@ const StyledDashboard = styled.div`
   .loss {
     color: #ba2d13;
   }
+  
+  .container {
+    margin-top: 1rem;
+  }
 
   .card {
     background: #ebf5ee;
@@ -119,7 +123,10 @@ function Dashboard(props) {
             </tr>
             {data.coins.map((coin) => (
               <tr key={coin.coinID}>
-                <td><img src={coin.image[0].imageLink} alt={coin.coinID}/>{coin.coinName}</td>
+                <td>
+                  <img src={coin.image[0].imageLink} alt={coin.coinID} />
+                  {coin.coinName}
+                </td>
                 <td>{coin.exchange}</td>
                 <td>{coin.quantity}</td>
                 <td>{coin.averagePrice}</td>
@@ -142,10 +149,19 @@ function Dashboard(props) {
           </StyledTable>
         ) : (
           <div className="container">
+            {data.totalPL > 0 ? (
+              <p>
+                Total P&L: <span className="profit">${data.totalPL}</span>
+              </p>
+            ) : (
+              <p>
+                Total P&L: <span className="loss">${data.totalPL}</span>
+              </p>
+            )}
             {data.coins.map((coin) => (
               <div key={coin.coinID} className="card">
                 <div className="card-title">
-                  <img src={coin.image[0].imageLink} alt={coin.coinID}/>
+                  <img src={coin.image[0].imageLink} alt={coin.coinID} />
                   <p className="coin-name">{coin.coinName}</p>
                 </div>
                 <p>Exchange: {coin.exchange}</p>
@@ -163,15 +179,6 @@ function Dashboard(props) {
                 )}
               </div>
             ))}
-            {data.totalPL > 0 ? (
-              <p>
-                Total P&L: <span className="profit">${data.totalPL}</span>
-              </p>
-            ) : (
-              <p>
-                Total P&L: <span className="loss">${data.totalPL}</span>
-              </p>
-            )}
           </div>
         )}
       </StyledDashboard>
