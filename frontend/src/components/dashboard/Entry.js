@@ -16,7 +16,6 @@ const StyledEntry = styled.div`
   .error {
     color: red;
   }
-  
 `;
 
 const StyledForm = styled.form`
@@ -77,7 +76,14 @@ function Entry(props) {
     } else {
       const parsedUser = JSON.parse(userLoggedIn);
       setUserID(parsedUser.userID);
-      fetch("https://exchangetracker.net/api/get-lists", {
+
+      let url = "";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:5000/api/get-lists";
+      } else {
+        url = "https://exchangetracker.net/api/get-lists";
+      }
+      fetch(url, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -139,7 +145,13 @@ function Entry(props) {
         quantity: quantity,
         averagePrice: averagePrice,
       };
-      fetch("https://exchangetracker.net/api/new-coin", {
+      let url = "";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:5000/api/new-coin";
+      } else {
+        url = "https://exchangetracker.net/api/new-coin";
+      }
+      fetch(url, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

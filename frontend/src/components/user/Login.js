@@ -66,7 +66,13 @@ function Login(props) {
   function handleLogin(e) {
     e.preventDefault();
     const credentials = { username: username, password: password };
-    fetch("https://exchangetracker.net/api/login-user", {
+    let url = "";
+    if (process.env.NODE_ENV === "development") {
+      url = "http://localhost:5000/api/login-user";
+    } else {
+      url = "https://exchangetracker.net/api/login-user"
+    }
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

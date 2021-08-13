@@ -104,7 +104,13 @@ function Delete(props) {
     } else {
       const currentUser = JSON.parse(userLoggedIn);
       setUsername(currentUser["username"]);
-      fetch("https://exchangetracker.net/api/get-dashboard", {
+      let url = "";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:5000/api/get-dashboard";
+      } else {
+        url = "https://exchangetracker.net/api/get-dashboard";
+      }
+      fetch(url, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -127,7 +133,13 @@ function Delete(props) {
       const submission = {
         toDelete: toDelete,
       };
-      fetch("https://exchangetracker.net/api/delete-coin", {
+      let url = "";
+      if (process.env.NODE_ENV === "development") {
+        url = "http://localhost:5000/api/delete-coin";
+      } else {
+        url = "https://exchangetracker.net/api/delete-coin";
+      }
+      fetch(url, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
