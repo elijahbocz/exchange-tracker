@@ -1,19 +1,8 @@
-import os
 import uuid
-
-import pymysql.cursors
-from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash
 
-load_dotenv()
+from db.connection import create_connection
 
-def create_connection():
-    return pymysql.connect(
-    host=os.environ.get("DB_HOST"), 
-    user=os.environ.get("DB_USER"), 
-    password=os.environ.get("DB_PASSWORD"), 
-    database=os.environ.get("DB_NAME"),
-    cursorclass=pymysql.cursors.DictCursor)
 
 def registration(username, password):
     connection = create_connection()
@@ -27,6 +16,7 @@ def registration(username, password):
     # connection is not autocommit by default. So you must commit to save
     # your changes.
     connection.commit()
+
 
 def valid_username(username):
     connection = create_connection()

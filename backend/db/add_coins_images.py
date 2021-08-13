@@ -1,21 +1,6 @@
-import os
 import requests
-from datetime import datetime
 
-import pymysql.cursors
-from dotenv import load_dotenv
-
-from coins_list import fetch_coins_list
-
-load_dotenv()
-
-def create_connection():
-    return pymysql.connect(
-    host=os.environ.get("DB_HOST"), 
-    user=os.environ.get("DB_USER"), 
-    password=os.environ.get("DB_PASSWORD"), 
-    database=os.environ.get("DB_NAME"),
-    cursorclass=pymysql.cursors.DictCursor)
+from db.connection import create_connection
 
 
 def add_coin_images():
