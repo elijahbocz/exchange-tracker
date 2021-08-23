@@ -17,7 +17,7 @@ const StyledDashboard = styled.div`
   .loss {
     color: #ba2d13;
   }
-  
+
   .container {
     margin-top: 1rem;
   }
@@ -135,7 +135,11 @@ function Dashboard(props) {
             {data.coins.map((coin) => (
               <tr key={coin.coinID}>
                 <td>
-                  <img src={coin.image[0].imageLink} alt={coin.coinID} />
+                  {coin.image[0] === undefined ? (
+                    <span></span>
+                  ) : (
+                    <img src={coin.image[0].imageLink} alt={coin.coinID} />
+                  )}
                   {coin.coinName}
                 </td>
                 <td>{coin.exchange}</td>
@@ -172,7 +176,11 @@ function Dashboard(props) {
             {data.coins.map((coin) => (
               <div key={coin.coinID} className="card">
                 <div className="card-title">
-                  <img src={coin.image[0].imageLink} alt={coin.coinID} />
+                  {coin.image[0] === undefined ? (
+                    <span></span>
+                  ) : (
+                    <img src={coin.image[0].imageLink} alt={coin.coinID} />
+                  )}
                   <p className="coin-name">{coin.coinName}</p>
                 </div>
                 <p>Exchange: {coin.exchange}</p>
