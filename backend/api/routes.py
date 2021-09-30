@@ -3,6 +3,7 @@ from db.register_user import registration, valid_username
 from db.coin import add_new_coin, delete_existing_coin, get_user_coins, delete_existing_coin, get_coin_image
 from db.coins_list import fetch_coins_list
 from db.exchanges import fetch_exchanges_names
+from db.get_users_total_pl import get_past_week_user_total_pls
 from external.simple import get_simple_price
 from flask import json, request, jsonify
 
@@ -143,5 +144,6 @@ def get_total_pls():
     if request.method == 'POST':
         req = request.json
         user_id = req['userID']
-        print(user_id)
+        print(get_past_week_user_total_pls(user_id))
+        return jsonify(get_past_week_user_total_pls(user_id))
     return request.json

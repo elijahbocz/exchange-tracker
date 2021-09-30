@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AnimatedAxis, // any of these can be non-animated equivalents
   AnimatedGrid,
@@ -7,11 +7,7 @@ import {
   Tooltip,
 } from "@visx/xychart";
 
-const data1 = [
-  { x: "2020-01-01", y: 50 },
-  { x: "2020-01-02", y: 10 },
-  { x: "2020-01-03", y: 20 },
-];
+let userTotalPLs = [];
 
 const accessors = {
   xAccessor: (d) => d.x,
@@ -19,6 +15,7 @@ const accessors = {
 };
 
 function TotalPLGraph() {
+
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
     const currentUser = JSON.parse(userLoggedIn);
@@ -41,16 +38,26 @@ function TotalPLGraph() {
     })
       .then((res) => res.json())
       .then((res) => {
+        for (const element of res) {
+          const datetime = element["dateAdded"].split(" ");
+          const yymmdd = datetime[0].split("-");
+          element["dateAdded"] = yymmdd;
+        }
+        console.log("res");
         console.log(res);
+        userTotalPLs = res.map((elem) => {
+          return { x: elem["dateAdded"], y: elem["totalPL"] };
+        });
+        console.log(userTotalPLs);
       });
-  });
+  }, []);
 
   return (
     <XYChart height={300} xScale={{ type: "band" }} yScale={{ type: "linear" }}>
       <AnimatedAxis orientation="bottom" />
       <AnimatedAxis orientation="left" />
       <AnimatedGrid columns={false} numTicks={4} />
-      <AnimatedLineSeries dataKey="Line 1" data={data1} {...accessors} />
+      <AnimatedLineSeries dataKey="Line 1" data={userTotalPLs} {...accessors} />
       <Tooltip
         snapTooltipToDatumX
         snapTooltipToDatumY
