@@ -5,6 +5,7 @@ import styled from "styled-components";
 import useWindowDimensions from "./useWindowDimensions";
 import Header from "../Header";
 import Footer from "../Footer";
+import BarGraph from "./TotalPLGraph";
 
 const StyledDashboard = styled.div`
   padding: 1rem;
@@ -200,6 +201,7 @@ function Dashboard(props) {
             ))}
           </div>
         )}
+        <BarGraph />
       </StyledDashboard>
       <Footer />
     </div>

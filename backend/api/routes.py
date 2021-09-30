@@ -135,3 +135,13 @@ def delete_coin():
             # parse list and delete the existing coins
             delete_existing_coin(coin_id)
     return request.json
+
+
+# Route for getting a user's total PLs to display in the graph
+@app.route('/api/get-total-pls', methods=['POST'])
+def get_total_pls():
+    if request.method == 'POST':
+        req = request.json
+        user_id = req['userID']
+        print(user_id)
+    return request.json
