@@ -9,3 +9,8 @@ create table exchanges_list (exchangeID VARCHAR(32), exchangeName VARCHAR(32));
 create table coins_images (coinID VARCHAR(36), imageLink VARCHAR(128));
 
 create table users_total_pl (userID VARCHAR(36), totalPL VARCHAR(32), dateAdded VARCHAR(32));
+
+
+
+
+INSERT INTO users_total_pl (userID, totalPL, dateAdded) VALUES ('c1bacfd8db8511eb940869e573c02e12', '323.02', '2021-010-13 16:08:03.047210');

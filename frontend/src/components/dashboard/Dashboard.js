@@ -5,7 +5,7 @@ import styled from "styled-components";
 import useWindowDimensions from "./useWindowDimensions";
 import Header from "../Header";
 import Footer from "../Footer";
-import BarGraph from "./TotalPLGraph";
+import TotalPLGraph from "./TotalPLGraph";
 
 const StyledDashboard = styled.div`
   padding: 1rem;
@@ -75,6 +75,12 @@ const StyledTable = styled.table`
     margin-right: 0.25rem;
     width: 14px;
   }
+`;
+
+const StyledGraphDiv = styled.div`
+  display: flex;
+  display-items: center;
+  justify-content: center;
 `;
 
 function Dashboard(props) {
@@ -205,7 +211,9 @@ function Dashboard(props) {
             ))}
           </div>
         )}
-        <BarGraph />
+        <StyledGraphDiv>
+          <TotalPLGraph />
+        </StyledGraphDiv>
       </StyledDashboard>
       <Footer />
     </div>
