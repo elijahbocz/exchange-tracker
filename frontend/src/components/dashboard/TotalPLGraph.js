@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  AnimatedAxis, // any of these can be non-animated equivalents
-  AnimatedGrid,
-  AnimatedLineSeries,
-  XYChart,
-  Tooltip,
-} from "@visx/xychart";
-
-let userTotalPLs = [];
-
-const accessors = {
-  xAccessor: (d) => d.x,
-  yAccessor: (d) => d.y,
-};
+import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
 
 function TotalPLGraph() {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("user");
@@ -43,38 +31,25 @@ function TotalPLGraph() {
           const yymmdd = datetime[0].split("-");
           element["dateAdded"] = yymmdd;
         }
-        console.log("res");
-        console.log(res);
-        userTotalPLs = res.map((elem) => {
-          return { x: elem["dateAdded"], y: elem["totalPL"] };
+        const userTotalPLs = res.map((elem) => {
+          return {
+            name: elem["dateAdded"].join("/"),
+            value: parseFloat(elem["totalPL"]),
+          };
         });
         console.log(userTotalPLs);
+        setData(userTotalPLs);
+        console.log(data);
       });
   }, []);
 
   return (
-    <XYChart height={300} xScale={{ type: "band" }} yScale={{ type: "linear" }}>
-      <AnimatedAxis orientation="bottom" />
-      <AnimatedAxis orientation="left" />
-      <AnimatedGrid columns={false} numTicks={4} />
-      <AnimatedLineSeries dataKey="Line 1" data={userTotalPLs} {...accessors} />
-      <Tooltip
-        snapTooltipToDatumX
-        snapTooltipToDatumY
-        showVerticalCrosshair
-        showSeriesGlyphs
-        renderTooltip={({ tooltipData, colorScale }) => (
-          <div>
-            <div style={{ color: colorScale(tooltipData.nearestDatum.key) }}>
-              {tooltipData.nearestDatum.key}
-            </div>
-            {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-            {", "}
-            {accessors.yAccessor(tooltipData.nearestDatum.datum)}
-          </div>
-        )}
-      />
-    </XYChart>
+    <LineChart width={800} height={400} data={data}>
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Line type="monotone" dataKey="value" stroke="#8884d8" />
+    </LineChart>
   );
 }
 export default TotalPLGraph;
