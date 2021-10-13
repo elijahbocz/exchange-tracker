@@ -5,6 +5,7 @@ import styled from "styled-components";
 import useWindowDimensions from "./useWindowDimensions";
 import Header from "../Header";
 import Footer from "../Footer";
+import TotalPLGraph from "./TotalPLGraph";
 
 const StyledDashboard = styled.div`
   padding: 1rem;
@@ -76,6 +77,12 @@ const StyledTable = styled.table`
   }
 `;
 
+const StyledGraphDiv = styled.div`
+  display: flex;
+  display-items: center;
+  justify-content: center;
+`;
+
 function Dashboard(props) {
   const [username, setUsername] = useState("");
   const { height, width } = useWindowDimensions();
@@ -124,43 +131,47 @@ function Dashboard(props) {
         <p>{username}'s Dashboard</p>
         {width > 768 ? (
           <StyledTable>
-            <tr>
-              <th>Coin Name</th>
-              <th>Exchange</th>
-              <th>Quantity</th>
-              <th>Average Price</th>
-              <th>Current Price</th>
-              <th>P & L</th>
-            </tr>
-            {data.coins.map((coin) => (
-              <tr key={coin.coinID}>
-                <td>
-                  {coin.image[0] === undefined ? (
-                    <span></span>
+            <thead>
+              <tr>
+                <th>Coin Name</th>
+                <th>Exchange</th>
+                <th>Quantity</th>
+                <th>Average Price</th>
+                <th>Current Price</th>
+                <th>P & L</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.coins.map((coin) => (
+                <tr key={coin.coinID}>
+                  <td>
+                    {coin.image[0] === undefined ? (
+                      <span></span>
+                    ) : (
+                      <img src={coin.image[0].imageLink} alt={coin.coinID} />
+                    )}
+                    {coin.coinName}
+                  </td>
+                  <td>{coin.exchange}</td>
+                  <td>{coin.quantity}</td>
+                  <td>{coin.averagePrice}</td>
+                  <td>{coin.currentPrice}</td>
+                  {coin.pAndL > 0 ? (
+                    <td className="profit">{coin.pAndL}</td>
                   ) : (
-                    <img src={coin.image[0].imageLink} alt={coin.coinID} />
+                    <td className="loss">{coin.pAndL}</td>
                   )}
-                  {coin.coinName}
-                </td>
-                <td>{coin.exchange}</td>
-                <td>{coin.quantity}</td>
-                <td>{coin.averagePrice}</td>
-                <td>{coin.currentPrice}</td>
-                {coin.pAndL > 0 ? (
-                  <td className="profit">{coin.pAndL}</td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan="5">Total P & L:</td>
+                {data.totalPL > 0 ? (
+                  <td className="profit">{data.totalPL}</td>
                 ) : (
-                  <td className="loss">{coin.pAndL}</td>
+                  <td className="loss">{data.totalPL}</td>
                 )}
               </tr>
-            ))}
-            <tr>
-              <td colSpan="5">Total P & L:</td>
-              {data.totalPL > 0 ? (
-                <td className="profit">{data.totalPL}</td>
-              ) : (
-                <td className="loss">{data.totalPL}</td>
-              )}
-            </tr>
+            </tbody>
           </StyledTable>
         ) : (
           <div className="container">
@@ -200,6 +211,9 @@ function Dashboard(props) {
             ))}
           </div>
         )}
+        <StyledGraphDiv>
+          <TotalPLGraph />
+        </StyledGraphDiv>
       </StyledDashboard>
       <Footer />
     </div>
