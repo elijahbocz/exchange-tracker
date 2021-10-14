@@ -47,7 +47,7 @@ function TotalPLGraph() {
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      {data[data.length - 1].value > data[0].value ? (
+      {data[data.length - 1].value >= data[0].value ? (
         <Line type="monotone" dataKey="value" stroke="#00ce2a" />
       ) : (
         <Line type="monotone" dataKey="value" stroke="#ba2d13" />
