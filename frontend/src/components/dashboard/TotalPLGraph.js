@@ -37,18 +37,21 @@ function TotalPLGraph() {
             value: parseFloat(elem["totalPL"]),
           };
         });
-        console.log(userTotalPLs);
         setData(userTotalPLs);
-        console.log(data);
+
       });
   }, []);
 
   return (
-    <LineChart width={800} height={400} data={data}>
+    <LineChart width={700} height={400} data={data}>
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      <Line type="monotone" dataKey="value" stroke="#8884d8" />
+      {data[data.length - 1].value >= data[0].value ? (
+        <Line type="monotone" dataKey="value" stroke="#00ce2a" />
+      ) : (
+        <Line type="monotone" dataKey="value" stroke="#ba2d13" />
+      )}
     </LineChart>
   );
 }
