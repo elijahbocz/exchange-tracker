@@ -81,6 +81,7 @@ const StyledGraphDiv = styled.div`
   display: flex;
   display-items: center;
   justify-content: center;
+  padding: 2rem;
 `;
 
 function Dashboard(props) {
