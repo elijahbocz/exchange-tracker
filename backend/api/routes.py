@@ -60,7 +60,8 @@ def get_dashboard():
         coin_ids = []
         for coin in coins:
             # coinSimpleId will be bitcoin, ethereum
-            coin_ids.append(coin['coinSimpleID'])
+            if coin not in coin_ids:
+                coin_ids.append(coin['coinSimpleID'])
         # get the current prices from CoinGecko in usd
         prices = get_simple_price(",".join(coin_ids), 'usd')
         # match the ids of the prices and coins
@@ -144,6 +145,5 @@ def get_total_pls():
     if request.method == 'POST':
         req = request.json
         user_id = req['userID']
-        print(get_past_week_user_total_pls(user_id))
         return jsonify(get_past_week_user_total_pls(user_id))
     return request.json
