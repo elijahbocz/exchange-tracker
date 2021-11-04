@@ -34,11 +34,10 @@ function TotalPLGraph() {
         const userTotalPLs = res.map((elem) => {
           return {
             name: elem["dateAdded"].join("/"),
-            value: parseFloat(elem["totalPL"]),
+            totalPL: parseFloat(elem["totalPL"]),
           };
         });
         setData(userTotalPLs);
-
       });
   }, []);
 
@@ -48,9 +47,9 @@ function TotalPLGraph() {
       <YAxis />
       <Tooltip />
       {data[data.length - 1] && data[data.length - 1].value >= data[0].value ? (
-        <Line type="monotone" dataKey="value" stroke="#00ce2a" />
+        <Line type="monotone" dataKey="totalPL" stroke="#ba2d13" />
       ) : (
-        <Line type="monotone" dataKey="value" stroke="#ba2d13" />
+        <Line type="monotone" dataKey="totalPL" stroke="#00ce2a" />
       )}
       
     </LineChart>

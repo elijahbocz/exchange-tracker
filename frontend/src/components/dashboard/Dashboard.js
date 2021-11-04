@@ -212,6 +212,9 @@ function Dashboard(props) {
             ))}
           </div>
         )}
+        <p>
+          <em>Prices are in USD</em>
+        </p>
         <StyledGraphDiv>
           <TotalPLGraph />
         </StyledGraphDiv>
